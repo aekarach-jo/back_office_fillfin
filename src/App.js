@@ -5,11 +5,11 @@ import Analytics from './components/analytics/Analytics';
 import Content from './components/content/Content';
 import Review from './components/review/Review';
 import Setting from './components/setting/Setting';
+import Login from './components/signin/login';
+import Register from './components/signin/register';
 import Store from './components/store/Store';
 import Home from './pages/Home';
 import SideList from './pages/SideList';
-import Login from './pages/signin/login';
-import Register from './pages/signin/register';
 
 function App() {
 
