@@ -1,23 +1,32 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { appAction } from '../store/app-slice';
 
 function SideList() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [open, setOpen] = useState(true);
     const [select, setSelect] = useState(0)
     const Menus = [
-        { title: "Dashboard", src: "Chart_fill", route: '/', fa: "fa-solid fa-house-chimney" },
-        { title: "Content", src: "Chat", route: '/content', fa: "fa-solid fa-book" },
-        { title: "Manage-Account", src: "User", gap: true, route: '/account', fa: "fa-solid fa-address-card" },
-        { title: "Manage-Store", src: "Calendar", route: '/store', fa: "fa-solid fa-shop" },
-        { title: "Manage-Review", src: "review", route: '/review', fa: "fa-solid fa-regular fa-star" },
-        { title: "Analytics", src: "Chart", route: '/analytics', fa: "fa-solid fa-chart-bar"},
-        { title: "Setting", src: "Setting", route: '/setting', fa: "fa-solid fa-screwdriver-wrench",gap: true},
+        { title: "Dashboard", route: '/', fa: "fa-solid fa-house-chimney" },
+        { title: "Content", route: '/content', fa: "fa-solid fa-book" },
+        { title: "Manage-Account", gap: true, route: '/account', fa: "fa-solid fa-address-card" },
+        { title: "Manage-Store", route: '/store', fa: "fa-solid fa-shop" },
+        { title: "Manage-Review", route: '/review', fa: "fa-solid fa-regular fa-star" },
+        { title: "Manage-Bank", route: '/bank', fa: "fa-solid fa-money-check-dollar" },
+        { title: "Analytics", route: '/analytics', fa: "fa-solid fa-chart-bar" },
+        { title: "Setting", route: '/setting', fa: "fa-solid fa-screwdriver-wrench", gap: true },
     ];
 
     function router(index, route) {
         setSelect(index)
         navigate(route)
+    }
+
+    function logout() {
+        dispatch(appAction.logout())
+        window.location.reload()
     }
 
     return (
@@ -63,6 +72,15 @@ function SideList() {
                             </span>
                         </li>
                     ))}
+                    <li
+                        className="flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4"
+                        onClick={() => logout()}
+                    >
+                        <i className="fa-solid fa-right-from-bracket"></i>
+                        <span className={`${!open && "hidden"} origin-left duration-200`}>
+                            Logout
+                        </span>
+                    </li>
                 </ul>
             </div>
 

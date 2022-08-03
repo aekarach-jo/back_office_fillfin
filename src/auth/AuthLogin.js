@@ -10,7 +10,6 @@ function AuthLogin() {
   const isLogin = useSelector((state) => (state.app.login))
 
   useEffect(() => {
-    console.log(isLogin)
   }, [isLogin])
 
   function onClickLogin() {
@@ -20,11 +19,6 @@ function AuthLogin() {
     dispatch(appAction.logout())
   }
   async function checkAuth() {
-    const access_token = localStorage.getItem("access_token")
-    const check = await axios({
-      method: 'GET',
-      url: `${api}`
-    })
   }
   return (
     <>

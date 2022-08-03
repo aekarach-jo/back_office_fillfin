@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import ProtectRoute from './auth/ProtectRoute';
 import Account from './components/account/Account';
 import Analytics from './components/analytics/Analytics';
+import Bank from './components/bank/Bank';
 import Content from './components/content/Content';
 import Review from './components/review/Review';
 import Setting from './components/setting/Setting';
@@ -12,62 +14,70 @@ import Home from './pages/Home';
 import SideList from './pages/SideList';
 
 function App() {
-
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={
-            <div className="flex">
-              <SideList />
-              <Home />
-            </div>
-          } />
-          <Route path='/content' element={
-            <div className="flex">
-              <SideList />
-              <Content />
-            </div>
-          } />
-          <Route path='/account' element={
-            <div className="flex">
-              <SideList />
-              <Account />
-            </div>
-          } />
-          <Route path='/store' element={
-            <div className="flex">
-              <SideList />
-              <Store />
-            </div>
-          } />
-          <Route path='/review' element={
-            <div className="flex">
-              <SideList />
-              <Review />
-            </div>
-          } />
-          <Route path='/analytics' element={
-            <div className="flex">
-              <SideList />
-              <Analytics />
-            </div>
-          } />
-          <Route path='/setting' element={
-            <div className="flex">
-              <SideList />
-              <Setting />
-            </div>
-          } />
+          <Route element={<ProtectRoute />} >
+            <Route path='/' element={
+              <div className="flex">
+                <SideList />
+                <Home />
+              </div>
+            } />
+            <Route path='/content' element={
+              <div className="flex">
+                <SideList />
+                <Content />
+              </div>
+            } />
+            <Route path='/account' element={
+              <div className="flex">
+                <SideList />
+                <Account />
+              </div>
+            } />
+            <Route path='/store' element={
+              <div className="flex">
+                <SideList />
+                <Store />
+              </div>
+            } />
+            <Route path='/review' element={
+              <div className="flex">
+                <SideList />
+                <Review />
+              </div>
+            } />
+            <Route path='/analytics' element={
+              <div className="flex">
+                <SideList />
+                <Analytics />
+              </div>
+            } />
+            <Route path='/setting' element={
+              <div className="flex">
+                <SideList />
+                <Setting />
+              </div>
+            } />
+            <Route path='/bank' element={
+              <div className="flex">
+                <SideList />
+                <Bank />
+              </div>
+            } />
+          </Route>
 
           {/* auth */}
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
         </Routes>
-
       </BrowserRouter>
     </div>
   );
 }
 
 export default App;
+
+
