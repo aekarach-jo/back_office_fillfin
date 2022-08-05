@@ -15,13 +15,6 @@ const appSlice = createSlice({
             state.isLogin = true
             state.access_token = action.payload.access_token
             state.refresh_token = action.payload.refresh_token
-
-
-            // if (initialAppState.access_token == null) {
-            //     state.isLogin = true
-            //     state.access_token = access_token
-            //     state.refresh_token = refresh_token
-            // }
         },
         logout(state, action) {
             state.isLogin = false

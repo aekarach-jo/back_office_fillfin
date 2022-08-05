@@ -9,7 +9,7 @@ import store from "./store/index";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <React.Fragment>
     <header>
       <link
         rel="stylesheet"
@@ -35,10 +35,11 @@ root.render(
         rel="stylesheet"
       />
     </header>
+
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>
+  </React.Fragment>
 );
 
 reportWebVitals();

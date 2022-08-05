@@ -12,14 +12,12 @@ const Toast = Swal.mixin({
     timerProgressBar: true,
 })
 
-export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
+export default function ModalEditMember({ bankData, onSetOpen, setBankData }) {
     const apiUrl = useSelector((state) => (state.app.apiPath))
     const [image, setImage] = useState(bankData.image)
     const [name, setName] = useState(bankData.name)
     const [bankNumber, setBankNumber] = useState(bankData.bank_number)
     const [branch, setBranch] = useState(bankData.branch)
-    const inputProfileImage = useRef([])
-    const [imageObj, setImageobj] = useState(`${apiUrl}${image}`)
     const [bankList, setBankList] = useState()
     const [selectBank, setSelectBank] = useState()
 

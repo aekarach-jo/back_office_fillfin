@@ -12,12 +12,12 @@ const Toast = Swal.mixin({
     timerProgressBar: true,
 })
 
-export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
+export default function Modal_add({ onSetOpen, setBankData }) {
     const apiUrl = useSelector((state) => (state.app.apiPath))
-    const [image, setImage] = useState(bankData.image)
-    const [name, setName] = useState(bankData.name)
-    const [bankNumber, setBankNumber] = useState(bankData.bank_number)
-    const [branch, setBranch] = useState(bankData.branch)
+    const [image, setImage] = useState()
+    const [name, setName] = useState()
+    const [bankNumber, setBankNumber] = useState()
+    const [branch, setBranch] = useState()
     const inputProfileImage = useRef([])
     const [imageObj, setImageobj] = useState(`${apiUrl}${image}`)
     const [bankList, setBankList] = useState()
@@ -36,27 +36,23 @@ export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
                 Authorization: `Bearer ${access_token}`
             }
         }).then((res) => {
+            console.log(res.data.data);
             setBankList(res.data.data)
-            for (let bank of res.data.data) {
-                if (bankData.bank_provider_id == bank.id) {
-                    setSelectBank(bank)
-                }
-            }
+            setSelectBank(res.data.data[0])
         })
     }
 
-    async function onEditBank() {
+    async function onCreateBank() {
         const access_token = localStorage.getItem('access_token')
         try {
             await axios({
                 method: 'POST',
-                url: `${apiUrl}/api/admin/bank/update`,
+                url: `${apiUrl}/api/admin/bank/create`,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${access_token}`
                 },
                 data: JSON.stringify({
-                    bank_id: bankData.id,
                     name: name,
                     bank_number: bankNumber,
                     branch: branch,
@@ -73,6 +69,10 @@ export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
         }
         catch (err) {
             console.log(err);
+            Toast.fire({
+                icon: 'error',
+                title: err.response.statusText
+            })
         }
     }
     return (
@@ -107,7 +107,7 @@ export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
                                         as="h2"
                                         className="pb-4 text-lg text-xl leading-6 text-gray-900"
                                     >
-                                        แก้ไขบัญชี
+                                        เพิ่มบัญชีธนาคาร
                                     </Dialog.Title>
                                     <div className="mt-2">
                                         <form className="w-full max-w-sm">
@@ -118,7 +118,7 @@ export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
                                                     </label>
                                                 </div>
                                                 <div className="md:w-2/3">
-                                                    <input onChange={(e) => setName(e.target.value)} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-500" type="text" defaultValue={name} />
+                                                    <input onChange={(e) => setName(e.target.value)} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-red-500" type="text" defaultValue={name} />
                                                 </div>
                                             </div>
                                             <div className="md:flex md:items-center mb-6">
@@ -128,7 +128,7 @@ export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
                                                     </label>
                                                 </div>
                                                 <div className="md:w-2/3">
-                                                    <input onChange={(e) => setBankNumber(e.target.value)} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-500" type="text" defaultValue={bankNumber} />
+                                                    <input onChange={(e) => setBankNumber(e.target.value)} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-red-500" type="text" defaultValue={bankNumber} />
                                                 </div>
                                             </div>
                                             <div className="md:flex md:items-center mb-6">
@@ -138,7 +138,7 @@ export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
                                                     </label>
                                                 </div>
                                                 <div className="md:w-2/3">
-                                                    <input onChange={(e) => setBranch(e.target.value)} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-500" type="text" defaultValue={branch} />
+                                                    <input onChange={(e) => setBranch(e.target.value)} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-red-500" type="text" defaultValue={branch} />
                                                 </div>
                                             </div>
                                             <div className="md:flex md:items-center mb-6">
@@ -203,9 +203,9 @@ export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
                                         <button
                                             type="button"
                                             className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={onEditBank}
+                                            onClick={onCreateBank}
                                         >
-                                            แก้ไข
+                                            เพิ่ม
                                         </button>
                                     </div>
 

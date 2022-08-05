@@ -56,11 +56,11 @@ export default function Login() {
       <div className="sm:block">
         <img
           className="imageBg absolute mix-blend-overlay w-full h-full object-cover "
-          src="./assets/background/art3.jpg"
+          src="./assets/background/leaf2.jpg"
           alt="login-bg"
         />
       </div>
-      <div className="4xl:rounded-t-full lg:rounded-l-full my-9 bg-gray-700 flex flex-col justify-center ">
+      <div className="4xl:rounded-t-full lg:rounded-l-full my-9 bg-gray-800 flex flex-col justify-center ">
         {/* <div className="4xl:rounded-l-full lg:rounded-full mx-20 bg-gray-800  "> */}
         <form className="relative max-w-[380px] w-full mx-auto p-8 px-8 rounded-lg  contrast-200">
           <h2 className="text-4xl text-white font-bold text-center">

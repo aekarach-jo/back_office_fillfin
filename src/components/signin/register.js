@@ -81,7 +81,7 @@ export default function Register() {
         <img
           className="imageBg absolute mix-blend-overlay w-full h-full object-cover "
           src="./assets/background/leaf.jpg"
-          alt="sunset"
+          alt="leaf"
         />
       </div>
       <div className="4xl:rounded-t-full lg:rounded-l-full my-9 bg-gray-600 flex flex-col justify-center ">
@@ -93,7 +93,7 @@ export default function Register() {
                 ? (
                   <img
                     className="rounded-full cursor-pointer min-w-[180px] min-h-[180px]"
-                    alt="image-first"
+                    alt="first"
                     src={image}
                     onClick={() => inputImage.current.click()}
                   />
@@ -163,7 +163,7 @@ export default function Register() {
               >
                 REGISTER
               </button>
-              <a className="text-white hover:text-blue hover:text-gray-800" href="/login">
+              <a className="text-white hover:text-gray-400" href="/login">
                 already have an account?
               </a>
             </form>

@@ -7,9 +7,10 @@ import {
     IconButton,
     Tooltip,
 } from '@mui/material';
+import { AppBar } from '@mui/material/Appbar';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Brightness4, Brightness7, Home, Menu } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom'
-import SideList from './SideList';
 
 export default function Dashboard() {
     const [open, setOpen] = useState(false);
@@ -66,7 +67,6 @@ export default function Dashboard() {
                             </IconButton>
                         </Toolbar>
                     </AppBar>
-                    <SideList {...{open, setOpen}}/>
                 </Box>
             </ThemeProvider>
         </div>

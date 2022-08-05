@@ -1,23 +1,37 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
+import Modal_add from './modal_add'
 import Modal_edit from './modal_edit'
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 800,
+    timerProgressBar: true,
+})
 
 export default function Bank() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
+    const access_token = useSelector((state) => (state.app.access_token))
     const [bankList, setBankList] = useState()
     const [bankData, setBankData] = useState()
-
     const [isOpen, setIsOpen] = useState(false)
+    const [choose, setChoose] = useState('')
     useEffect(() => {
-        apiGetBank()
+        ApiGetBank()
     }, [])
 
-    async function apiGetBank() {
+    async function ApiGetBank() {
         try {
             await axios({
                 method: 'GET',
-                url: `${apiUrl}/api/admin/bank/get`
+                url: `${apiUrl}/api/admin/bank/get`,
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                }
             }).then(res => {
                 console.log(res.data.data);
                 setBankList(res.data.data)
@@ -26,6 +40,43 @@ export default function Bank() {
             console.log(err);
         }
     }
+
+    async function ApiChangeStatus(bankId, status) {
+        if (status == 'active') {
+            status = 'inactive'
+        } else if (status == 'inactive') {
+            status = 'active'
+        }
+        try {
+            await axios({
+                method: 'POST',
+                url: `${apiUrl}/api/admin/changeStatusBank`,
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                },
+                data: {
+                    bank_id: bankId,
+                    status: status
+                }
+            }).then(res => {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'แก้ไขแล้ว'
+                })
+                ApiGetBank()
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async function apiDeleteBank(bankId) {
+        await axios({
+            method: 'GET',
+            url: `${apiUrl}/api`
+        })
+    }
+
     function onSetOpen() {
         setIsOpen(!isOpen)
     }
@@ -42,12 +93,15 @@ export default function Bank() {
                                 ID
                             </th>
                             <th scope="col" className="py-3 px-6">
-                                Bank name
+                                name
+                            </th>
+                            <th scope="col" className="py-3 px-6">
+                                Bank
                             </th>
                             <th scope="col" className="py-3 px-6">
                                 Bank number
                             </th>
-                            <th scope="col" className="py-3 px-6">
+                            <th scope="col" className="py-3 px-6 text-center">
                                 shortname
                             </th>
                             <th scope="col" className="py-3 px-6">
@@ -64,35 +118,46 @@ export default function Bank() {
                                 <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {data.id}
                                 </th>
-                                <td className="py-4 px-6">
+                                <td className="py-2 px-6">
+                                    {data.name}
+                                </td>
+                                <td className="py-2 px-6">
                                     {data.bank_name}
                                 </td>
-                                <td className="py-4 px-6">
+                                <td className="py-2 px-6">
                                     {data.bank_number}
                                 </td>
-                                <td className="py-4 px-6">
+                                <td className="py-2 px-6 text-center">
                                     {data.bank_shortname}
                                 </td>
-                                <td className="py-4 px-6">
+                                <td className="py-2 px-6">
                                     <label className="inline-flex relative items-center mr-5 cursor-pointer">
-                                        <input type="checkbox" value="" className="sr-only peer" />
-                                        <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                                        <input type="checkbox" className="sr-only peer" defaultChecked={data.status == "active" ? true : false} onClick={() => ApiChangeStatus(data.id, data.status)} />
+                                        <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600" />
                                     </label>
                                 </td>
-                                <td className="py-4 px-6">
-                                    <div className="flex flex-row justify-center">
-                                        <button type="button" className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
-                                            onClick={() => (setIsOpen(!isOpen), setBankData(data))}
+                                <td className="py-2 px-6">
+                                    <div className="flex flex-row justify-center gap-2">
+                                        <button type="button" className="text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900"
+                                            onClick={() => (setIsOpen(!isOpen), setChoose('edit'), setBankData(data))}
                                         >แก้ไข</button>
-                                        <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">ลบ</button>
+                                        {/* <button onChange={apiDeleteBank(data.id)} type="button" className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5  text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">ลบ</button> */}
                                     </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                {isOpen &&
-                    <Modal_edit bankData={bankData} onSetOpen={onSetOpen} />
+                
+                <button onClick={() => (setIsOpen(!isOpen),setChoose('add'))} type="button" className="flex gap-2 align-center
+                 item-center justify-center m-3 text-white bg-pink-700 hover:bg-pink-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                    <i className="fa-solid fa-plus flex align-center justify-center"></i>
+                </button>
+                {isOpen && choose == 'edit' &&
+                    <Modal_edit bankData={bankData} onSetOpen={onSetOpen} setBankData={ApiGetBank} />
+                }
+                {isOpen && choose == 'add' &&
+                    <Modal_add bankData={bankData} onSetOpen={onSetOpen} setBankData={ApiGetBank} />
                 }
             </div>
         </div>

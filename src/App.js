@@ -5,6 +5,9 @@ import Account from './components/account/Account';
 import Analytics from './components/analytics/Analytics';
 import Bank from './components/bank/Bank';
 import Content from './components/content/Content';
+import Order from './components/order/order';
+import OrderDetail from './components/order/orderDetail.js/orderDetail';
+import Package from './components/package/Package';
 import Review from './components/review/Review';
 import Setting from './components/setting/Setting';
 import Login from './components/signin/login';
@@ -65,6 +68,24 @@ function App() {
               <div className="flex">
                 <SideList />
                 <Bank />
+              </div>
+            } />
+            <Route path='/package' element={
+              <div className="flex">
+                <SideList />
+                <Package />
+              </div>
+            } />
+            <Route path='/order' element={
+              <div className="flex">
+                <SideList />
+                <Order />
+              </div>
+            } />
+            <Route path='/order/detail' element={
+              <div className="flex">
+                <SideList />
+                <OrderDetail />
               </div>
             } />
           </Route>
