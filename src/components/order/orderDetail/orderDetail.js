@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import moment from 'moment';
-import { useLocation, useNavigate, useRoutes } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export default function OrderDetail() {
@@ -77,7 +77,7 @@ export default function OrderDetail() {
                     <p className='text-pink-500 '>Back to order</p>
                 </button>
             </div>
-            <div className="overflow-x-auto relative mt-5 border-2 rounded-lg ">
+            <div className="overflow-x-auto relative mt-5 border-2 rounded-lg  max-w-[1100px] mx-auto">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -135,20 +135,20 @@ export default function OrderDetail() {
                         <>
                             {productList?.map((data, index) => (
                                 <div key={index}>
-                                    <div className="rounded-lg shadow-lg bg-white max-w-xs ">
+                                    <div className="rounded-lg shadow-lg bg-white max-w-xs relative">
                                         <img className="mx-auto rounded-t-lg" src={`${apiUrl}${data.product_image}`} alt="productImage" />
                                         <div className="p-6">
                                             <h5 className="text-gray-900 text-xl font-medium mb-2">{data.product_name}</h5>
                                             <p className="text-gray-700 text-base mb-4">{data.product_content} </p>
-                                            <button
-                                                type="button"
+                                            <p
                                                 className={` 
-                                            inline-block px-6 py-2.5  text-white font-medium text-xs 
-                                            leading-tight uppercase rounded shadow-md 
-                                            ${data.product_status == 'pending' && 'bg-yellow-600  hover:shadow-lg focus:shadow-lg focus:outline-none  focus:ring-0  active:shadow-lg transition duration-150  ease-in-out'}
-                                            ${data.product_status == 'accepted' && 'bg-green-600   hover:shadow-lg  focus:shadow-lg focus:outline-none  focus:ring-0  active:shadow-lg transition duration-150  ease-in-out'}
-                                            ${data.product_status == 'shipping' && 'bg-orange-600   hover:shadow-lg focus:shadow-lg focus:outline-none  focus:ring-0  active:shadow-lg transition duration-150  ease-in-out'}                                             `}
-                                            >{data.product_status}</button>
+                                            inline-block px-6 py-1.5  text-white font-medium text-xs 
+                                            leading-tight uppercase  shadow-md 
+                                            ${data.product_status == 'pending' && 'bg-yellow-600  hover:shadow-lg absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}
+                                            ${data.product_status == 'accepted' && 'bg-green-600   hover:shadow-lg  absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}
+                                            ${data.product_status == 'success' && 'bg-green-600   hover:shadow-lg  absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}
+                                            ${data.product_status == 'shipping' && 'bg-orange-600   hover:shadow-lg absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}                                             `}
+                                            >{data.product_status}</p>
                                         </div>
                                     </div>
                                 </div>

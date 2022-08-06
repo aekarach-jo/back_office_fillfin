@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useTable from "../../../hooks/useTable";
 import moment from "moment";
-import TableFooter from "../../sub_conponent/TableFooter";
+import TableFooter from "../../sub_component/TableFooter";
 
 const Table = ({ data, rowsPerPage, searchText }) => {
   const [page, setPage] = useState(1);

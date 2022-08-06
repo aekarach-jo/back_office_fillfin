@@ -85,7 +85,7 @@ export default function Bank() {
         <div className="h-screen flex-1 p-7 pt-12">
             <h1 className="text-2xl font-semibold ">Manage Bank</h1>
 
-            <div className="overflow-x-auto relative mt-5">
+            <div className="overflow-x-auto relative mt-5   max-w-[1100px] mx-auto border-2 rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -141,15 +141,14 @@ export default function Bank() {
                                         <button type="button" className="text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900"
                                             onClick={() => (setIsOpen(!isOpen), setChoose('edit'), setBankData(data))}
                                         >แก้ไข</button>
-                                        {/* <button onChange={apiDeleteBank(data.id)} type="button" className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5  text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">ลบ</button> */}
                                     </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                
-                <button onClick={() => (setIsOpen(!isOpen),setChoose('add'))} type="button" className="flex gap-2 align-center
+
+                <button onClick={() => (setIsOpen(!isOpen), setChoose('add'))} type="button" className="flex gap-2 align-center
                  item-center justify-center m-3 text-white bg-pink-700 hover:bg-pink-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
                     <i className="fa-solid fa-plus flex align-center justify-center"></i>
                 </button>

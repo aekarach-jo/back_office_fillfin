@@ -37,7 +37,7 @@ function Account() {
                 <input maxLength={10} onChange={e => setSearchText(e.target.value)} type="text" className='border-2 rounded flex px-3' placeholder='ค้นหาชื่อผู้ใช้' style={{ margin: "0 0 0 auto" }} />
                 <i className="absolute right-3 text-gray-500/25 top-1.5 fa-solid fa-magnifying-glass"></i>
             </div>
-            <div className="overflow-x-auto relative mt-5">
+            <div className="overflow-x-auto relative mt-5 max-w-[1100px] mx-auto border-2 rounded-lg">
                 {memberList !== undefined && memberList.length > 0 &&
                     <Table data={memberList} rowsPerPage={10} searchText={searchText} />
                 }

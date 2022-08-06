@@ -31,9 +31,9 @@ function Content() {
         <div className="h-screen flex-1 p-7 pt-12 max-h-screen overflow-auto">
         <h1 className="text-2xl font-semibold ">Manage Content </h1>
    
-        <div className="overflow-x-auto relative mt-5">
+        <div className="overflow-x-auto relative mt-10 max-w-[1100px] mx-auto border-2 rounded-lg">
             {contentList !== undefined && contentList.length > 0 &&
-                <Table data={contentList} rowsPerPage={10} />
+                <Table data={contentList} rowsPerPage={10} apiGetContent={apiGetContent}/>
             }
         </div>
     </div>

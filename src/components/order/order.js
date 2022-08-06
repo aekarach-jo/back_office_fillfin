@@ -9,7 +9,7 @@ export default function Order() {
 
     const [searchText, setSearchText] = useState("")
     const [orderList, setOrderList] = useState()
-    
+
     useEffect(() => {
         apiGetOrder()
     }, [])
@@ -36,7 +36,7 @@ export default function Order() {
                 <input onChange={e => setSearchText(e.target.value)} type="text" className='border-2 rounded flex px-3' placeholder='ค้นหาออเดอร์' style={{ margin: "0 0 0 auto" }} />
                 <i className="absolute right-3 text-gray-500/25 top-1.5 fa-solid fa-magnifying-glass"></i>
             </div>
-            <div className="overflow-x-auto relative mt-5  pb-5">
+            <div className="overflow-x-auto relative mt-5  max-w-[1100px] mx-auto border-2 rounded-lg">
                 {orderList !== undefined && orderList.length > 0 &&
                     <Table data={orderList} rowsPerPage={10} searchText={searchText} />
                 }

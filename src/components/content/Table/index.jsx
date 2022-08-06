@@ -1,32 +1,57 @@
 import React, { useState } from "react";
 import useTable from "../../../hooks/useTable";
 import moment from "moment";
-import TableFooter from "../../sub_conponent/TableFooter";
+import TableFooter from "../../sub_component/TableFooter";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Toast = Swal.mixin({
   toast: true,
-  position: 'top-end',
+  position: "top-end",
   showConfirmButton: false,
   timer: 800,
   timerProgressBar: true,
-})
+});
 
-const Table = ({ data, rowsPerPage }) => {
+const Table = ({ data, rowsPerPage, apiGetContent }) => {
   const apiUrl = useSelector((state) => state.app.apiPath);
   const access_token = useSelector((state) => state.app.access_token);
   const [page, setPage] = useState(1);
   const { slice, range } = useTable(data, page, rowsPerPage);
 
-
-  async function ApiChangeStatus(contentId, status) {
+  function handleChangeStatus(contentId, status) {
     if (status === "yes") {
-      status = "no";
+      Swal.fire({
+        icon: "warning",
+        position: "center",
+        title: "ยืนยันการเปลี่ยนสถานะ",
+        text: "การปิดสถานะ จะส่งผลต่อการมองเห็นของลูกค้า",
+        confirmButtonText: "ยืนยัน",
+        cancelButtonText: "ยกเลิก",
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: "#C93A87",
+        backdrop: false,
+      }).then((res) => {
+        if (res.isConfirmed) {
+          status = "no";
+          apiChangeStatus(contentId, status);
+        } else {
+          Toast.fire({
+            icon: "warning",
+            title: "ยกเลิกแล้ว",
+          });
+        }
+      });
     } else if (status === "no") {
       status = "yes";
+      apiChangeStatus(contentId, status);
     }
+  }
+
+  async function apiChangeStatus(contentId, status) {
     try {
       await axios({
         method: "POST",
@@ -39,6 +64,7 @@ const Table = ({ data, rowsPerPage }) => {
           display: status,
         },
       }).then((res) => {
+        apiGetContent();
         Toast.fire({
           icon: "success",
           title: "แก้ไขแล้ว",
@@ -48,7 +74,7 @@ const Table = ({ data, rowsPerPage }) => {
       console.log(err);
     }
   }
-  
+
   function FormatDate({ dateTime }) {
     dateTime = moment(dateTime).format("DD MMM YYYY");
     return <span>{dateTime}</span>;
@@ -82,7 +108,7 @@ const Table = ({ data, rowsPerPage }) => {
         <tbody>
           {slice?.map((data, index) => (
             <tr
-              key={index}
+              key={data.id}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
             >
               <th
@@ -104,20 +130,21 @@ const Table = ({ data, rowsPerPage }) => {
                     type="checkbox"
                     className="sr-only peer"
                     defaultChecked={data.display === "yes" ? true : false}
-                    onClick={() => ApiChangeStatus(data.id, data.display)}
+                    onClick={() => handleChangeStatus(data.id, data.display)}
                   />
                   <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600" />
                 </label>
               </td>
               <td className="py-2 px-6">
-                <div className="flex flex-row justify-center ">
-                  <button
-                    type="button"
-                    className="m-auto text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-yellow-900"
-                  >
-                    แก้ไข
-                  </button>
-                  {/* <button onChange={apiDeleteBank(data.id)} type="button" className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5  text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">ลบ</button> */}
+                <div className="flex flex-row justify-center gap-2">
+                  <Link to={`/content/detail?type=${data.type}`}>
+                    <button
+                      type="button"
+                      className="text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900"
+                    >
+                      แก้ไข
+                    </button>
+                  </Link>
                 </div>
               </td>
             </tr>

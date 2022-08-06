@@ -86,14 +86,14 @@ function SideList() {
                     {Menus.map((Menu, index) => (
                         <li
                             key={index}
-                            className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
+                            className={`flex  rounded-md p-2 cursor-pointer hover:bg-[#f0f8ff] hover:text-pink-600 text-gray-300 text-sm items-center gap-x-4 duration-200
                         ${Menu.gap ? "mt-9" : "mt-2"} 
-                        ${index == select && "bg-light-white text-pink-600"}
+                        ${index == select && "bg-[#f0f8ff] text-pink-600"}
                                  `}
                             onClick={() => (router(index, Menu.route), localStorage.setItem('sideMenuSelect', index))}
                         >
                             <i className={`${Menu.fa}  
-                            ${index == select && " text-pink-600"}
+                            ${index == select && " text-pink-600 "}
                             `} ></i>
                             {/* <img src={`./assets/${Menu.src}.png`} alt="iconSrc" /> */}
                             <span className={`${!open && "hidden"} origin-left duration-200`}>

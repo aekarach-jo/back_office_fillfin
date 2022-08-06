@@ -2,11 +2,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import ProtectRoute from './auth/ProtectRoute';
 import Account from './components/account/Account';
+import AccountDetail from './components/account/accountDetail/accountDetail';
 import Analytics from './components/analytics/Analytics';
 import Bank from './components/bank/Bank';
 import Content from './components/content/Content';
+import ContentDetail from './components/content/contentDetail/contentDetail';
 import Order from './components/order/order';
-import OrderDetail from './components/order/orderDetail.js/orderDetail';
+import OrderDetail from './components/order/orderDetail/orderDetail';
 import Package from './components/package/Package';
 import Review from './components/review/Review';
 import Setting from './components/setting/Setting';
@@ -82,10 +84,24 @@ function App() {
                 <Order />
               </div>
             } />
+
+            {/* Route Level 2 */}
             <Route path='/order/detail' element={
               <div className="flex">
                 <SideList />
                 <OrderDetail />
+              </div>
+            } />
+            <Route path='/content/detail' element={
+              <div className="flex">
+                <SideList />
+                <ContentDetail />
+              </div>
+            } />
+            <Route path='/account/detail' element={
+              <div className="flex">
+                <SideList />
+                <AccountDetail />
               </div>
             } />
           </Route>

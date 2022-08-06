@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import useTable from "../../../hooks/useTable";
 import moment from "moment";
-import TableFooter from "../../sub_conponent/TableFooter";
+import TableFooter from "../../sub_component/TableFooter";
+import { Link } from "react-router-dom";
 
 const Table = ({ data, rowsPerPage, searchText }) => {
   const [page, setPage] = useState(1);
@@ -63,13 +64,15 @@ const Table = ({ data, rowsPerPage, searchText }) => {
                 </td>
                 <td className="py-2 px-6">
                   <div className="flex flex-row justify-center ">
+                  <Link to={`/account/detail?member_code=${data.member_code}`}>
+
                     <button
                       type="button"
-                      className="m-auto text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-yellow-900"
+                      className="m-auto text-white bg-pink-400 hover:bg-pink-500 focus:outline-none focus:ring-4 focus:ring-pink-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-yellow-900"
                     >
-                      แก้ไข
+                      แก้ไขรหัสผ่าน
                     </button>
-                    {/* <button onChange={apiDeleteBank(data.id)} type="button" className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5  text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">ลบ</button> */}
+               </Link>
                   </div>
                 </td>
               </tr>
