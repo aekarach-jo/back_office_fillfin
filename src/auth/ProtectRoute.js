@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, Outlet, useNavigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { appAction } from '../store/app-slice'
 import jwt_decode from "jwt-decode";
 import moment from 'moment';
@@ -9,20 +9,22 @@ import axios from 'axios';
 function useAuth() {
     const dispatch = useDispatch()
     dispatch(appAction.checkToken())
-    const access_token = useSelector((state) => (state.app.access_token))
     const apiUrl = useSelector((state) => (state.app.apiPath))
     const refresh_token = useSelector((state) => (state.app.refresh_token))
-    if (access_token) {
-        setInterval(() => {
-            const acc = jwt_decode(access_token)
-            const tokenExpirationTimeInSeconds = (acc.exp - moment(Math.floor(Date.now() / 1000)));
-            console.log(tokenExpirationTimeInSeconds);
-            if (tokenExpirationTimeInSeconds < 20) {
-                console.log('time out');
-                return RefreshToken(apiUrl, refresh_token)
-            }
-        }, 10000)
-    }
+    const access_token = useSelector((state) => (state.app.access_token))
+    setInterval(() => {
+        const accessToken = localStorage.getItem('access_token')
+        const acc = jwt_decode(accessToken)
+        const runTimePerSecond = (acc.exp - moment(Math.floor(Date.now() / 1000)));
+        console.log(runTimePerSecond);
+        if (runTimePerSecond < 30) {
+            console.log('time out');
+            RefreshToken(apiUrl, refresh_token)
+            setTimeout(() =>{dispatch(appAction.checkToken()) },2000)  
+            return true;
+        }
+    }, 5000)
+
     if (access_token) {
         return true;
     } else {
@@ -42,11 +44,12 @@ async function RefreshToken(apiUrl, refresh_token) {
         }).then(res => {
             console.log(res);
             localStorage.setItem('access_token', res.data.token)
-            return true;
         })
     }
     catch (err) {
         console.log(err);
+        localStorage.setItem('access_token', "")
+        window.location.reload()
         return false;
     }
 }

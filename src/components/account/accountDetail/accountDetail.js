@@ -58,7 +58,7 @@ export default function AccountDetail() {
                 icon: 'warning',
                 position: 'center',
                 title: 'รหัสผ่านไม่ถูกต้อง',
-                showConfirmButton : false,
+                showConfirmButton: false,
                 timer: 1000
             })
             return false;
@@ -105,7 +105,7 @@ export default function AccountDetail() {
     }
 
     return (
-        <div className="h-screen flex-1 p-7 pt-12 max-h-screen overflow-auto">
+        <div className="h-screen flex-1 4 pt-12 max-h-screen overflow-auto animate-[fade_0.3s_ease-in-out]">
             <h1 className="text-2xl font-semibold ">Change Password</h1>
             <div className="relative m-3 text-left gap-2 flex align-middle ">
                 <button onClick={() => navigate(-1)} className='flex gap-2 align-center ' >
@@ -187,11 +187,11 @@ export default function AccountDetail() {
                         dark:border-gray-600 dark:placeholder-gray-400 
                         dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     </form>
-                    <div className="flex flex-row justify-center pt-10">
-                        <button 
-                        onClick={() => handleChangePassword()}
-                        type="button" 
-                        className="gap-2 flex text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-red-900">
+                    <div className="flex flex-row justify-center pt-4">
+                        <button
+                            onClick={() => handleChangePassword()}
+                            type="button"
+                            className="gap-2 flex text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-red-900">
                             <i className="my-auto fa-solid fa-repeat"></i>
                             เปลี่ยนรหัสผ่าน</button>
                     </div>

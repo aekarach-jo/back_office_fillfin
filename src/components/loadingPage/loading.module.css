@@ -18,7 +18,6 @@
     color: aliceblue;
     width: 100%;
     z-index: 2;
-
 }
 
 .lds_ellipsis {
@@ -34,7 +33,7 @@
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    background: #FF95B5 ;
+    background: #eb094c ;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 

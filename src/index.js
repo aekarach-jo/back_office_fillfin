@@ -34,6 +34,7 @@ root.render(
         href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap"
         rel="stylesheet"
       />
+      <link rel="stylesheet" href="../public/assets/scss/sell-product.scss" />
     </header>
 
     <Provider store={store}>

@@ -154,7 +154,7 @@ export default function Modal_add({ onSetOpen, setBankData }) {
                                                                 <Listbox.Button className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-500">
                                                                     <span className="block truncate text-left">{selectBank.name}</span>
                                                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                                                        <i className="fa-solid fa-arrow-down"></i>
+                                                                        <i className="animate-bounce fa-solid fa-arrow-down"></i>
                                                                     </span>
                                                                 </Listbox.Button>
                                                                 <Transition
@@ -183,7 +183,8 @@ export default function Modal_add({ onSetOpen, setBankData }) {
                                                                                         </span>
                                                                                         {selected ? (
                                                                                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-600">
-                                                                                                <i className="fa-solid fa-check"></i>                                                                                            </span>
+                                                                                                <i className="fa-solid fa-check"></i>
+                                                                                            </span>
                                                                                         ) : null}
                                                                                     </>
                                                                                 )}

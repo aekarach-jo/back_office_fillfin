@@ -101,8 +101,8 @@ export default function ContentDetail() {
         })
     }
     return (
-        <div className='h-screen flex-1 p-7 pt-12 max-h-screen overflow-auto'>
-            <h1 className="text-2xl font-semibold ">Content</h1>
+        <div className='h-screen flex-1 4 pt-12 max-h-screen overflow-auto animate-[fade_.3s_ease-in-out]'>
+            <h1 className="text-2xl font-semibold ">{contentType}</h1>
             <div className="relative m-3 text-left gap-2 flex align-middle ">
                 <button onClick={() => navigate(-1)} className='flex gap-2 align-center ' >
                     <i className="flex my-auto text-pink-500 hover:text-[21px] duration-200 cursor-pointer text-xl fa-solid fa-circle-arrow-left" ></i>
@@ -165,7 +165,7 @@ export default function ContentDetail() {
                 {(contentType === 'terms-of-service' ||
                     contentType === 'privacy-policy') &&
                     <>
-                        <div className='my-8'>
+                        <div className='my-0'>
                             <h2 className="text-left block my-2 font-bold text-gray-900 dark:text-gray-300"
                             >Content</h2>
                             <Editor
@@ -181,7 +181,7 @@ export default function ContentDetail() {
                     </>
                 }
             <button
-                type="submit"
+                type="button"
                 className="text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900"
                 onClick={() => handleEdit()}
             >แก้ไข</button>

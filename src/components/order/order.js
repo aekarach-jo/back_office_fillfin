@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Table from './Table';
 
@@ -7,6 +7,7 @@ export default function Order() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
     const access_token = useSelector((state) => (state.app.access_token))
 
+    const _export = useRef(null)
     const [searchText, setSearchText] = useState("")
     const [orderList, setOrderList] = useState()
 
@@ -23,14 +24,20 @@ export default function Order() {
             }
         }).then(res => {
             if (res.data.status) {
+                console.log(res.data.order)
                 setOrderList(res.data.order)
             }
         })
     }
 
+    const excelExport = () => {
+        if (_export.current !== null) {
+            _export.current.save();
+        }
+    };
 
     return (
-        <div className="h-screen flex-1 p-7 pt-12 max-h-screen overflow-auto">
+        <div className="h-screen flex-1 p-4 pt-12 max-h-screen overflow-auto animate-[fade_0.3s_ease-in-out]">
             <h1 className="text-2xl font-semibold ">Manage Order</h1>
             <div className="relative mt-3">
                 <input onChange={e => setSearchText(e.target.value)} type="text" className='border-2 rounded flex px-3' placeholder='ค้นหาออเดอร์' style={{ margin: "0 0 0 auto" }} />

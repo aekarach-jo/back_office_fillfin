@@ -69,8 +69,7 @@ export default function OrderDetail() {
     }
 
     return (
-        <div className="h-screen flex-1 p-7 pt-12 max-h-screen overflow-auto">
-            <h1 className="text-2xl font-semibold ">Product</h1>
+        <div className="h-screen flex-1 p-4 pt-12 max-h-screen overflow-auto animate-[fade_0.3s_ease-in-out]">
             <div className="relative m-3 text-left gap-2 flex align-middle ">
                 <button onClick={() => navigate(-1)} className='flex gap-2 align-center ' >
                     <i className="flex my-auto text-pink-500 hover:text-[21px] duration-200 cursor-pointer text-xl fa-solid fa-circle-arrow-left" ></i>

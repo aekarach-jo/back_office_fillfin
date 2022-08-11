@@ -28,7 +28,7 @@ function Content() {
 
 
     return (
-        <div className="h-screen flex-1 p-7 pt-12 max-h-screen overflow-auto">
+        <div className="h-screen flex-1 p-4 pt-12 max-h-screen overflow-auto animate-[fade_.3s_ease-in-out]">
         <h1 className="text-2xl font-semibold ">Manage Content </h1>
    
         <div className="overflow-x-auto relative mt-10 max-w-[1100px] mx-auto border-2 rounded-lg">

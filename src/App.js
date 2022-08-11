@@ -3,20 +3,24 @@ import './App.css';
 import ProtectRoute from './auth/ProtectRoute';
 import Account from './components/account/Account';
 import AccountDetail from './components/account/accountDetail/accountDetail';
-import Analytics from './components/analytics/Analytics';
+import LiveChat from './components/livechat/liveChat';
 import Bank from './components/bank/Bank';
 import Content from './components/content/Content';
 import ContentDetail from './components/content/contentDetail/contentDetail';
 import Order from './components/order/order';
 import OrderDetail from './components/order/orderDetail/orderDetail';
 import Package from './components/package/Package';
+import Payment from './components/payment/payment';
+import PaymentDetail from './components/payment/paymentDetail/paymentDetail';
 import Review from './components/review/Review';
 import Setting from './components/setting/Setting';
 import Login from './components/signin/login';
 import Register from './components/signin/register';
 import Store from './components/store/Store';
+import StoreDetail from './components/store/storeDetail/storeDetail';
 import Home from './pages/Home';
 import SideList from './pages/SideList';
+import Dashboard from './components/dashboard/dashboard';
 
 function App() {
   return (
@@ -27,7 +31,7 @@ function App() {
             <Route path='/' element={
               <div className="flex">
                 <SideList />
-                <Home />
+                <Dashboard />
               </div>
             } />
             <Route path='/content' element={
@@ -54,10 +58,10 @@ function App() {
                 <Review />
               </div>
             } />
-            <Route path='/analytics' element={
+            <Route path='/livechat' element={
               <div className="flex">
                 <SideList />
-                <Analytics />
+                <LiveChat />
               </div>
             } />
             <Route path='/setting' element={
@@ -76,6 +80,12 @@ function App() {
               <div className="flex">
                 <SideList />
                 <Package />
+              </div>
+            } />
+            <Route path='/payment' element={
+              <div className="flex">
+                <SideList />
+                <Payment />
               </div>
             } />
             <Route path='/order' element={
@@ -104,6 +114,19 @@ function App() {
                 <AccountDetail />
               </div>
             } />
+            <Route path='/store/detail' element={
+              <div className="flex">
+                <SideList />
+                <StoreDetail />
+              </div>
+            } />
+            <Route path='/payment/detail' element={
+              <div className="flex">
+                <SideList />
+                <PaymentDetail />
+              </div>
+            } />
+
           </Route>
 
           {/* auth */}

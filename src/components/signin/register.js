@@ -76,18 +76,17 @@ export default function Register() {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
-      <div className="sm:block">
+    <div className="grid grid-cols-1  h-screen w-full">
+      <div className="block">
         <img
           className="imageBg absolute mix-blend-overlay w-full h-full object-cover "
           src="./assets/background/leaf.jpg"
           alt="leaf"
         />
       </div>
-      <div className="4xl:rounded-t-full lg:rounded-l-full my-9 bg-gray-600 flex flex-col justify-center ">
+      <div className="lg:ml-10 lg:w-[50%] sm:rounded-lg sm:h-screen md:rounded-sm lg:rounded-full lg:my-40 bg-gray-800 flex flex-col justify-center ">
         {/* <div className="4xl:rounded-l-full lg:rounded-full mx-20 bg-gray-800  "> */}
-        <div className="flex flex-row flex-wrap sm:flex-wrap">
-          <div className="basis-2/4 my-auto">
+          {/* <div className="basis-2/4 my-auto">
             <div className="text-white relative max-w-[180px] mx-auto w-full my-auto rounded-full">
               {image.length > 0
                 ? (
@@ -112,7 +111,7 @@ export default function Register() {
               />
               <p className="mt-2">เพิ่มภาพโปรไฟล์</p>
             </div>
-          </div>
+          </div> */}
           <div className="basis-2/4">
             <form className="relative max-w-[380px] w-full mx-auto p-8 px-8 rounded-lg  contrast-200">
               <h2 className="text-4xl text-white font-bold text-center">
@@ -169,8 +168,7 @@ export default function Register() {
             </form>
           </div>
         </div>
+        {/* </div> */}
       </div>
-      {/* </div> */}
-    </div >
   );
 }
