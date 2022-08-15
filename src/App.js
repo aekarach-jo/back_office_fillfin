@@ -18,9 +18,11 @@ import Login from './components/signin/login';
 import Register from './components/signin/register';
 import Store from './components/store/Store';
 import StoreDetail from './components/store/storeDetail/storeDetail';
-import Home from './pages/Home';
 import SideList from './pages/SideList';
 import Dashboard from './components/dashboard/dashboard';
+import Admin from './components/admin/admin';
+import AdminDetail from './components/admin/adminDetail/adminDetail';
+import Report from './components/report/report';
 
 function App() {
   return (
@@ -38,6 +40,12 @@ function App() {
               <div className="flex">
                 <SideList />
                 <Content />
+              </div>
+            } />
+            <Route path='/admin' element={
+              <div className="flex">
+                <SideList />
+                <Admin />
               </div>
             } />
             <Route path='/account' element={
@@ -94,8 +102,20 @@ function App() {
                 <Order />
               </div>
             } />
+            <Route path='/report' element={
+              <div className="flex">
+                <SideList />
+                <Report />
+              </div>
+            } />
 
             {/* Route Level 2 */}
+            <Route path='/admin/detail' element={
+              <div className="flex">
+                <SideList />
+                <AdminDetail />
+              </div>
+            } />
             <Route path='/order/detail' element={
               <div className="flex">
                 <SideList />

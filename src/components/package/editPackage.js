@@ -34,7 +34,7 @@ export default function EditPackage() {
         })
     }
     return (
-        <div className='flex gap-10 flex-wrap justify-center p-6   max-w-[1100px] mx-auto'>
+        <div className='flex gap-10 flex-wrap justify-center p-6 max-w-[1100px] mx-auto animate-[fade_0.3s_ease-in-out]'>
             {packageList?.map((data, index) => (
                 <div key={index} className="max-w-[17rem] p-2 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <div className="flex flex-col items-center">

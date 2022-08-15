@@ -22,7 +22,7 @@ export default function StoreDetail() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
     const access_token = useSelector((state) => (state.app.access_token))
     const [storeCode, setStoreCode] = useState(query.get('storeCode'))
-    const [gender, setGender] = useState(localStorage.getItem('store_gender'))
+    const [gender, setGender] = useState(query.get('gender'))
     const [storeDetail, setStoreDetail] = useState('')
     const inputProfileImage = useRef([])
     const [imageObj, setImageobj] = useState()

@@ -10,8 +10,8 @@ export default function Login() {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState("aekadmin")
+  const [password, setPassword] = useState("aekadmin")
 
   useEffect(() => {
   }, [])
@@ -39,28 +39,38 @@ export default function Login() {
         }
       })
     } catch (err) {
-      console.log(err);
-      Swal.fire({
-        icon: 'warning',
-        position: 'center',
-        title: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
-        timer: 1000,
-        showConfirmButton: false
-      })
+      console.log(err.response.status);
+      if (err.response.status == 401) {
+        Swal.fire({
+          icon: 'warning',
+          position: 'center',
+          title: 'รอแอดมินตรวจสอบ',
+          timer: 1500,
+          showConfirmButton: false
+        })
+      } else if(err.response.status == 404){
+        Swal.fire({
+          icon: 'warning',
+          position: 'center',
+          title: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+          timer: 1500,
+          showConfirmButton: false
+        })
+      }
     }
   }
 
 
   return (
-    <div className="grid grid-cols-1 h-screen">
+    <div className="grid grid-cols-1 h-screen relative" >
       <div className="block">
         <img
           className="imageBg absolute mix-blend-overlay w-full h-full object-cover "
-          src="./assets/background/art.jpg"
+          src="./assets/background/art2.jpg"
           alt="login-bg"
         />
       </div>
-      <div className="lg:ml-10 lg:w-[50%] sm:rounded-lg sm:h-screen md:rounded-sm lg:rounded-full lg:my-40 bg-gray-800 flex flex-col justify-center ">
+      <div className=" lg:ml-10 lg:w-[30%] sm:rounded-lg sm:h-screen md:rounded-sm lg:rounded-lg lg:my-40 bg-gray-800 flex flex-col justify-center ">
         {/* <div className="4xl:rounded-l-full lg:rounded-full mx-20 bg-gray-800  "> */}
         <form className="relative max-w-[380px] w-full mx-auto p-8 px-8 rounded-lg  contrast-200">
           <h2 className="text-4xl text-white font-bold text-center">
@@ -70,7 +80,7 @@ export default function Login() {
             <label className="text-start ml-2">User name</label>
             <input
               type="text"
-              value={username}
+              defaultValue={username}
               onChange={(e) => setUsername(e.target.value)}
               className=" rounded-lg bg-gray-600 mt-2 p-2 focus:border-pink-500 focus:bg-white-800 focus:outline-none"
             />
@@ -79,7 +89,7 @@ export default function Login() {
             <label className="text-start ml-2">Password</label>
             <input
               type="password"
-              value={password}
+              defaultValue={password}
               onChange={(e) => setPassword(e.target.value)}
               className="rounded-lg bg-gray-600 mt-2 p-2 focus:border-pink-500 focus:bg-white-800 focus:outline-none"
             />

@@ -85,7 +85,7 @@ export default function Bank() {
         <div className="h-screen flex-1 p-4 pt-12 animate-[fade_0.3s_ease-in-out]">
             <h1 className="text-2xl font-semibold ">Manage Bank</h1>
 
-            <div className="overflow-x-auto relative mt-5   max-w-[1100px] mx-auto border-2 rounded-lg">
+            <div className="overflow-x-auto relative mt-5 max-w-[1100px] mx-auto border-2 rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>

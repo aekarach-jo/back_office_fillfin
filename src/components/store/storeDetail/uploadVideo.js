@@ -105,9 +105,11 @@ export default function UploadVideo({ videoPath }) {
                 ref={inputStoreVideo}
                 onChange={(e) => inputVideoOnChange(e)}
             />
-            <button type="button" className="text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-4 focus:ring-pink-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center m-2 dark:focus:ring-yellow-900"
-                onClick={handleConUpload}
-            >อัปโหลด</button>
+            {videoFile.length > 0 &&
+                <button type="button" className="text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-4 focus:ring-pink-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center m-2 dark:focus:ring-yellow-900"
+                    onClick={handleConUpload}
+                >อัปโหลด</button>
+            }
         </div>
     )
 }

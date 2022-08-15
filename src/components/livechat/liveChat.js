@@ -127,7 +127,6 @@ function LiveChat() {
             <div className="flex flex-row overflow-x-auto mt-5 border-2 border-pink-700 rounded-lg max-w-[1100px] h-[800px] mx-auto">
                 <div className={`w-[30%] px-4 m-4 flex flex-col gap-2 overflow-y-scroll ${st.displayScroller}`}>
                     {numMock?.map((num, index) => (
-                        <>
                             <div
                                 key={index}
                                 className={`${select == index && 'text-pink-500 border-2 border-pink-700 bg-pink-500 w-[95%] rounded-r-full'} duration-200 flex flex-row cursor-pointer bg-pink-100 w-[90%] min-h-[7%] rounded-full`}
@@ -135,7 +134,6 @@ function LiveChat() {
                                 <img className={`rounded-full  my-auto ml-4 w-[20%] p-2`} width={20} height={20} src="/assets/product.png" alt="image-contactUs" />
                                 <div className=" w-[80%] my-auto text-left pl-6">{num.names}</div>
                             </div>
-                        </>
                     ))}
                 </div>
                 <div className='w-[70%]  p-4 flex flex-col gap-4 justify-between overflow-x-auto'>

@@ -7,14 +7,16 @@ import { appAction } from '../store/app-slice';
 const Menus = [
     { title: "Dashboard", route: '/', fa: "fa-solid fa-house-chimney" },
     { title: "Content", route: '/content', fa: "fa-solid fa-book" },
-    { title: "Manage-Account", gap: true, route: '/account', fa: "fa-solid fa-address-card" },
-    { title: "Manage-order", route: '/order', fa: "fa-solid fa-border-all" },
-    { title: "Manage-Store", route: '/store/?gender=men', fa: "fa-solid fa-shop" },
-    { title: "Manage-Review", route: '/review', fa: "fa-solid fa-regular fa-star" },
-    { title: "Manage-Bank", route: '/bank', fa: "fa-solid fa-money-check-dollar" },
-    { title: "Manage-Package", route: '/package', fa: "fa-solid fa-box-open" },
-    { title: "Manage-Payment", route: '/payment', fa: "fa-solid fa-dollar" },
+    { title: "Admin", route: '/admin', fa: "fa-solid fa-user" },
+    { title: "Manage Account", gap: true, route: '/account', fa: "fa-solid fa-address-card" },
+    { title: "Manage order", route: '/order', fa: "fa-solid fa-border-all" },
+    { title: "Manage Store", route: '/store', fa: "fa-solid fa-shop" },
+    { title: "Manage Review", route: '/review', fa: "fa-solid fa-regular fa-star" },
+    { title: "Manage Bank", route: '/bank', fa: "fa-solid fa-money-check-dollar" },
+    { title: "Manage Package", route: '/package', fa: "fa-solid fa-box-open" },
+    { title: "Manage Payment", route: '/payment', fa: "fa-solid fa-dollar" },
     { title: "Live Chat", route: '/livechat', fa: "fa-solid fa-chart-bar" },
+    { title: "Report", route: '/report', fa: "fa-solid fa-square-poll-vertical" },
     { title: "Setting", route: '/setting', fa: "fa-solid fa-screwdriver-wrench", gap: true },
 ];
 
@@ -86,7 +88,7 @@ function SideList() {
                         <li
                             key={index}
                             className={`flex rounded-lg collapse-sidebar-md p-2 cursor-pointer hover:bg-[#f0f8ff] hover:text-pink-600 text-gray-300 text-sm items-center gap-x-4  duration-300
-                            ${Menu.gap ? "mt-9" : "mt-2"} 
+                            ${Menu.gap ? "mt-9" : "mt-1"} 
                             ${index == select && "bg-[#f0f8ff] text-pink-600"} `}
                             onClick={() => (router(index, Menu.route), localStorage.setItem('sideMenuSelect', index))}
                         >

@@ -1,41 +1,42 @@
-import axios from 'axios'
 import { Tab } from '@headlessui/react'
-import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import Swal from 'sweetalert2'
-import StoreGender from './storeGender'
-
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 800,
-    timerProgressBar: true,
-})
+import ReportDetail from './reportDetail/reportDetail'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
+export default function Report() {
+    const apiUrl = useSelector((state) => (state.app.apiPath))
+    const access_token = useSelector((state) => (state.app.access_token))
 
-function Store() {
-    const [gender, setGender] = useState('men')
-    useEffect(() => {console.log(gender);},[gender])
+    const _exportMember = useRef(`${apiUrl}/api/admin/memberReport`)
+    const _exportStore = useRef(`${apiUrl}/api/admin/storeReport`)
+    const _exportOrders = useRef(`${apiUrl}/api/admin/storeReport`)
+
+    const [reportMember, setReportMember] = useState([])
+    const [reportStore, setReportStore] = useState([])
+    const [reportOrders, setReportOrders] = useState([])
+
+    useEffect(() => {
+    }, [])
 
     let [categories] = useState({
-        'men': [],
-        'women':  [],
+        'รายงานลูกค้า': [],
+        'รายงานร้านค้า': [],
+        'รายงานออเดอร์': [],
     })
 
     return (
         <div className="h-screen flex-1 p-4 pt-12  max-h-screen overflow-auto animate-[fade_0.3s_ease-in-out]">
-            <h1 className="text-2xl font-semibold">Manage store</h1>
-            <div className='flex flex-col gap-2 flex-wrap justify-center items-center pt-6 max-w-[1100px] mx-auto'>
+            <h1 className="text-2xl font-semibold">Manage report</h1>
+            <div className='flex flex-col gap-2 flex-wrap justify-center pt-6 max-w-[1100px] mx-auto'>
                 <Tab.Group>
-                    <Tab.List className="w-[220px] h-[35px] flex space-x-1 rounded-xl bg-pink-900/20 p-1">
+                    <Tab.List className="w-[320px] h-[35px] flex flex-row mx-auto space-x-1 rounded-xl bg-pink-900/20 p-1">
                         {Object.keys(categories).map((category) => (
                             <Tab
-                                onClick={() => (setGender(category), localStorage.setItem('store_gender', category))}
                                 key={category}
                                 className={({ selected }) =>
                                     classNames(
@@ -58,7 +59,7 @@ function Store() {
                                 'ring-white ring-opacity-60 ring-offset-2 '
                             )}
                         >
-                            <StoreGender gender={gender} />
+                            <ReportDetail report={reportMember} select={'memberReport'}/>
                         </Tab.Panel>
                         <Tab.Panel
                             className={classNames(
@@ -66,14 +67,21 @@ function Store() {
                                 'ring-white ring-opacity-60 ring-offset-2 '
                             )}
                         >
-                            <StoreGender gender={gender} />
+                            <ReportDetail report={reportStore} select={'storeReport'}/>
+
+                        </Tab.Panel>
+                        <Tab.Panel
+                            className={classNames(
+                                'rounded-xl bg-white',
+                                'ring-white ring-opacity-60 ring-offset-2 '
+                            )}
+                        >
+                            <ReportDetail report={reportOrders} select={'orderReport'}/>
+
                         </Tab.Panel>
                     </Tab.Panels>
                 </Tab.Group>
             </div>
         </div>
-
     )
 }
-
-export default Store

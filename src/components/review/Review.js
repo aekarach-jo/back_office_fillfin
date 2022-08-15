@@ -30,9 +30,9 @@ export default function Review() {
                 Authorization: `Bearer ${access_token}`
             }
         }).then(res => {
-            console.log(res.data.review);
+            console.log(res);
             if (res.data.status) {
-                setReviewList(res.data.review)
+                setReviewList(res.data.reviews)
             }
         })
     }

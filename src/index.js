@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import 'bootstrap/dist/css/bootstrap.min.css'
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -34,9 +33,11 @@ root.render(
         href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap"
         rel="stylesheet"
       />
-      <link rel="stylesheet" href="../public/assets/scss/sell-product.scss" />
     </header>
-
+    <script>
+      <script src="https://unpkg.com/flowbite@{{< current_version >}}/dist/datepicker.js"></script>
+      <script src="https://unpkg.com/flowbite@1.5.2/dist/datepicker.js"></script>
+    </script>
     <Provider store={store}>
       <App />
     </Provider>
