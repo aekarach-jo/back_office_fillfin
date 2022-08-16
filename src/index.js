@@ -34,10 +34,10 @@ root.render(
         rel="stylesheet"
       />
     </header>
-    <script>
+    {/* <script>
       <script src="https://unpkg.com/flowbite@{{< current_version >}}/dist/datepicker.js"></script>
       <script src="https://unpkg.com/flowbite@1.5.2/dist/datepicker.js"></script>
-    </script>
+    </script> */}
     <Provider store={store}>
       <App />
     </Provider>

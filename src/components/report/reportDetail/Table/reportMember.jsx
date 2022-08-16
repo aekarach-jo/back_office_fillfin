@@ -5,6 +5,7 @@ import useTable from "../../../../hooks/useTable";
 import { Link } from "react-router-dom";
 
 const ReportMember = ({ data, rowsPerPage, searchText }) => {
+  console.log(data);
   const [page, setPage] = useState(1);
   const { slice, range } = useTable(data, page, rowsPerPage);
 
@@ -19,23 +20,26 @@ const ReportMember = ({ data, rowsPerPage, searchText }) => {
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" className="py-3 px-6">
-              username
-            </th>
-            <th scope="col" className="py-3 px-6">
-              package
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Gender
-            </th>
-            <th scope="col" className="py-3 px-6">
-              createdAt
+            <th scope="col" className="py-3 px-6 text-center">
+              วันต่ออายุ Package ล่าสุุด
             </th>
             <th scope="col" className="py-3 px-6 text-center">
-              status
+              ระดับ Package
             </th>
             <th scope="col" className="py-3 px-6 text-center">
-              option
+              ชื่อผู้ใช้งาน
+            </th>
+            <th scope="col" className="py-3 px-6 text-center">
+              ยอดซื้อสะสม
+            </th>
+            <th scope="col" className="py-3 px-6 text-center">
+              ยอด Package สะสม
+            </th>
+            <th scope="col" className="py-3 px-6 text-center">
+              วันที่สมัครสมาชิก
+            </th>
+            <th scope="col" className="py-3 px-6 text-center">
+              หมายเหตุ
             </th>
           </tr>
         </thead>
@@ -45,7 +49,7 @@ const ReportMember = ({ data, rowsPerPage, searchText }) => {
               if (searchText === "") {
                 return text;
               } else if (
-                text.username.toLowerCase().includes(searchText.toLowerCase())
+                text.cusUser.toLowerCase().includes(searchText.toLowerCase())
               ) {
                 return text;
               }
@@ -55,43 +59,17 @@ const ReportMember = ({ data, rowsPerPage, searchText }) => {
                 key={index}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
               >
-                <th
-                  scope="row"
-                  className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  {data.username}
-                </th>
-                <td className="py-2 px-6">{data.name}</td>
-                <td className="py-2 px-6">{data.gender}</td>
-                <td className="py-2 px-6">
-                  <FormatDate dateTime={data.createdAt} />
-                </td>
                 <td className="py-2 px-6 text-center">
-                  <p
-                    className={`
-                        ${data.status_payment == "confirm" && "text-green-600"}
-                        ${data.status_payment == "pending" && "text-yellow-500"}
-                        ${data.status_payment == "error" && "text-red-500"}
-                          text-md font-semibold`}
-                  >
-                    {data.status_payment}
-                  </p>
+                  <FormatDate dateTime={data.dateRenewal} />
                 </td>
-                <td className="py-2 px-6">
-                  <div className="flex flex-row justify-center">
-                    <Link
-                      to={`/payment/detail?payment=${data.paymentId}&&member=${data.username}`}
-                    >
-                      <p
-                        type="button"
-                        className="m-auto gap-2 flex text-white bg-pink-400 hover:bg-pink-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-yellow-900"
-                      >
-                        <i className="fa-solid fa-eye my-auto"></i>
-                        ดูข้อมูลการชำระ
-                      </p>
-                    </Link>
-                  </div>
+                <td className="py-2 px-6 text-center">{data.packageLevel}</td>
+                <td className="py-2 px-6 text-center">{data.cusUser}</td>
+                <td className="py-2 px-6 text-center">{data.totalPrice}</td>
+                <td className="py-2 px-6 text-center">{data.totalPackage}</td>
+                <td className="py-2 px-6 text-center">
+                  <FormatDate dateTime={data.dataRegister} />
                 </td>
+                <td className="py-2 px-6 text-center">{data.note}</td>
               </tr>
             ))}
         </tbody>

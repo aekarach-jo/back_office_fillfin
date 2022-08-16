@@ -22,13 +22,13 @@ const Table = ({ data, rowsPerPage, searchText }) => {
             <th scope="col" className="py-3 px-6">
               username
             </th>
-            <th scope="col" className="py-3 px-6">
+            <th scope="col" className="py-3 px-6 text-center">
               package
             </th>
-            <th scope="col" className="py-3 px-6">
+            <th scope="col" className="py-3 px-6 text-center">
               Gender
             </th>
-            <th scope="col" className="py-3 px-6">
+            <th scope="col" className="py-3 px-6 text-center">
               createdAt
             </th>
             <th scope="col" className="py-3 px-6 text-center">
@@ -61,9 +61,9 @@ const Table = ({ data, rowsPerPage, searchText }) => {
                 >
                   {data.username}
                 </th>
-                <td className="py-2 px-6">{data.name}</td>
-                <td className="py-2 px-6">{data.gender}</td>
-                <td className="py-2 px-6">
+                <td className="py-2 px-6 text-center">{data.name}</td>
+                <td className="py-2 px-6 text-center">{data.gender}</td>
+                <td className="py-2 px-6 text-center">
                   <FormatDate dateTime={data.createdAt} />
                 </td>
                 <td className="py-2 px-6 text-center">

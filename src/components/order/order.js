@@ -45,7 +45,7 @@ export default function Order() {
             </div>
             <div className="overflow-x-auto relative mt-5  max-w-[1100px] mx-auto border-2 rounded-lg">
                 {orderList !== undefined && orderList.length > 0 &&
-                    <Table data={orderList} rowsPerPage={10} searchText={searchText} />
+                    <Table data={orderList} rowsPerPage={11} searchText={searchText} />
                 }
             </div>
         </div>

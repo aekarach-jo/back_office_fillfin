@@ -63,14 +63,14 @@ export default function Login() {
 
   return (
     <div className="grid grid-cols-1 h-screen relative" >
-      <div className="block">
+      {/* <div className="block"> */}
         <img
           className="imageBg absolute mix-blend-overlay w-full h-full object-cover "
           src="./assets/background/art2.jpg"
           alt="login-bg"
         />
-      </div>
-      <div className=" lg:ml-10 lg:w-[30%] sm:rounded-lg sm:h-screen md:rounded-sm lg:rounded-lg lg:my-40 bg-gray-800 flex flex-col justify-center ">
+      {/* </div> */}
+      <div className=" lg:mx-auto lg:w-[30%] sm:rounded-lg sm:h-screen md:rounded-sm lg:rounded-lg lg:my-auto bg-gray-800 flex flex-col justify-center ">
         {/* <div className="4xl:rounded-l-full lg:rounded-full mx-20 bg-gray-800  "> */}
         <form className="relative max-w-[380px] w-full mx-auto p-8 px-8 rounded-lg  contrast-200">
           <h2 className="text-4xl text-white font-bold text-center">

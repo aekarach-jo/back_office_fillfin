@@ -21,22 +21,31 @@ const ReportOrsers = ({ data, rowsPerPage, searchText }) => {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="py-3 px-6">
-              username
+              Order NO.
             </th>
             <th scope="col" className="py-3 px-6">
-              package
+              ชื่อ
             </th>
             <th scope="col" className="py-3 px-6">
-              Gender
+              ที่อยู่
             </th>
             <th scope="col" className="py-3 px-6">
-              createdAt
+              Tel.
             </th>
             <th scope="col" className="py-3 px-6 text-center">
-              status
+              ราคาขาย
             </th>
             <th scope="col" className="py-3 px-6 text-center">
-              option
+              ราคาหลังหัก %GP
+            </th>
+            <th scope="col" className="py-3 px-6 text-center">
+              สลิปขาย
+            </th>
+            <th scope="col" className="py-3 px-6 text-center">
+              สลิปชำระ
+            </th>
+            <th scope="col" className="py-3 px-6 text-center">
+              ข้อความ
             </th>
           </tr>
         </thead>
