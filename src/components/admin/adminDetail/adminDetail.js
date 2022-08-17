@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import moment from 'moment';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import st from '../../../styles/account/accountDetail.module.scss'
 
 export default function AdminDetail() {
     const query = new URLSearchParams(useLocation().search);
@@ -15,7 +16,6 @@ export default function AdminDetail() {
 
     useEffect(() => {
         apiGetOrder()
-        console.log(adminCode);
     }, [])
 
     async function apiGetOrder() {
@@ -69,47 +69,33 @@ export default function AdminDetail() {
     }
 
     return (
-        <div className="h-screen flex-1 p-4 pt-12 max-h-screen overflow-auto animate-[fade_0.3s_ease-in-out]">
-            <div className="relative m-3 text-left gap-2 flex align-middle ">
-                <button onClick={() => navigate(-1)} className='flex gap-2 align-center ' >
-                    <i className="flex my-auto text-pink-500 hover:text-[21px] duration-200 cursor-pointer text-xl fa-solid fa-circle-arrow-left" ></i>
-                    <p className='text-pink-500 '>Back to order</p>
+        <div className={st.content}>
+            <div className={st.wrapBtnBack}>
+                <button onClick={() => navigate(-1)}>
+                    <i className=" fa-solid fa-circle-arrow-left" ></i>
+                    <p>Back to admin</p>
                 </button>
             </div>
-            <div className="overflow-x-auto relative mt-5 border-2 rounded-lg  max-w-[1100px] mx-auto">
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div className={st.contentTable}>
+                <table >
+                    <thead >
                         <tr>
-                            <th scope="col" className="py-3 px-6">
-                                Name
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                email
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                createdAt
-                            </th>
-                            <th scope="col" className="py-3 px-6 text-center">
-                                permission
-                            </th>
-                            <th scope="col" className="py-3 px-6 text-center">
-                                status
-                            </th>
-                            <th scope="col" className="py-3 px-6 text-center">
-                                option
-                            </th>
+                            <th scope="col"> ชื่อผู้ใช้ </th>
+                            <th scope="col"> อีเมลล์ </th>
+                            <th scope="col"> วันที่สมัคร </th>
+                            <th scope="col"> สิทธิ์ </th>
+                            <th scope="col">สถานะ</th>
+                            <th scope="col">เพิ่มเติม</th>
                         </tr>
                     </thead>
                     <tbody>
                         {adminList &&
                             <Fragment >
-                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td className="py-2 px-6">{adminList.username}</td>
-                                    <td className="py-2 px-6">{adminList.email}</td>
-                                    <td className="py-2 px-6">
-                                        <FormatDate dateTime={adminList.createdAt} />
-                                    </td>
-                                    <td className="py-2 px-6 ">
+                                <tr>
+                                    <td>{adminList.username}</td>
+                                    <td>{adminList.email}</td>
+                                    <td><FormatDate dateTime={adminList.createdAt}/></td>
+                                    <td>
                                         <p
                                             className={`
                                                     ${adminList.statusConfirm === "confirm" &&

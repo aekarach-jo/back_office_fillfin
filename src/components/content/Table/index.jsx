@@ -6,7 +6,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-
+import st from "../../../styles/allUse/table.module.scss";
 const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
@@ -82,49 +82,25 @@ const Table = ({ data, rowsPerPage, apiGetContent }) => {
 
   return (
     <>
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className={st.contentTable}>
+        <thead>
           <tr>
-            <th scope="col" className="py-3 px-6">
-              ID
-            </th>
-            <th scope="col" className="py-3 px-6">
-              type
-            </th>
-            <th scope="col" className="py-3 px-6">
-              createdAt
-            </th>
-            <th scope="col" className="py-3 px-6">
-              updatedAt
-            </th>
-            <th scope="col" className="py-3 px-6">
-              status
-            </th>
-            <th scope="col" className="py-3 px-6 text-center">
-              option
-            </th>
+            <th scope="col"> ลำดับ </th>
+            <th scope="col"> ประเภท </th>
+            <th scope="col"> อัปเดทเมื่อ </th>
+            <th scope="col"> สถานะ</th>
+            <th scope="col"> เพิ่มเติม</th>
           </tr>
         </thead>
         <tbody>
           {slice?.map((data, index) => (
-            <tr
-              key={data.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-            >
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                {data.id}
-              </th>
-              <td className="py-2 px-6">{data.type}</td>
-              <td className="py-2 px-6">
-                <FormatDate dateTime={data.createdAt} />
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{data.type}</td>
+              <td>
+                <FormatDate dateTime={data.updatedAt}/>
               </td>
-              <td className="py-2 px-6">
-                <FormatDate dateTime={data.updatedAt} />
-              </td>
-              <td className="py-2 px-6 ">
+              <td>
                 <label className="inline-flex relative items-center mr-5 cursor-pointer">
                   <input
                     type="checkbox"
@@ -135,7 +111,7 @@ const Table = ({ data, rowsPerPage, apiGetContent }) => {
                   <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600" />
                 </label>
               </td>
-              <td className="py-2 px-6">
+              <td>
                 <div className="flex flex-row justify-center gap-2">
                   <Link to={`/content/detail?type=${data.type}`}>
                     <button

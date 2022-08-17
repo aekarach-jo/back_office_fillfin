@@ -24,8 +24,8 @@ const appSlice = createSlice({
         },
         checkToken(state, action) {
             state.isLogin = true
-            state.access_token = localStorage.getItem('access_token')
-            state.refresh_token = localStorage.getItem('refresh_token')
+            state.access_token = localStorage.getItem('accessToken')
+            state.refresh_token = localStorage.getItem('refreshToken')
         }
 
     }

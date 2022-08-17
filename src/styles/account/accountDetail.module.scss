@@ -1,0 +1,79 @@
+.content {
+  @apply h-screen flex-1 p-4 pt-12 max-h-screen overflow-auto;
+
+  .wrapBtnBack {
+    @apply relative m-3 text-left gap-2 flex align-middle;
+
+    button {
+      @apply flex gap-2 align-middle;
+
+      i {
+        @apply flex my-auto text-pink-500 duration-200 cursor-pointer text-xl;
+      }
+
+      p {
+        @apply text-pink-500;
+      }
+    }
+  }
+
+  .contentTable {
+    @apply overflow-x-auto relative mt-5 border-2 rounded-lg mx-auto;
+    max-width: 1100px;
+
+    table {
+      @apply w-full text-sm text-left text-gray-500 dark:text-gray-400;
+
+      thead {
+        @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400;
+
+        th {
+          @apply py-3 px-6 text-center;
+        }
+      }
+      tbody {
+        tr {
+          @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700;
+
+          td {
+            @apply py-2 px-6 text-center;
+
+            .report {
+              @apply flex flex-row justify-center;
+
+              button {
+                @apply gap-2 flex text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-red-900;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .contentChangePass {
+      @apply flex flex-col items-center   py-10 px-5 flex-wrap bg-emerald-200/20;
+
+      form {
+        p {
+          @apply text-left block mt-2 font-bold text-gray-900 dark:text-gray-300;
+        }
+
+        input {
+          @apply bg-gray-50 w-full border border-gray-300 
+                    text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                    focus:border-blue-500 block p-2.5 dark:bg-gray-700 
+                    dark:border-gray-600 dark:placeholder-gray-400 
+                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+        }
+      }
+
+      .wrapBtnChangePass{
+        @apply flex flex-row justify-center pt-4 ;
+
+        button{
+            @apply gap-2 flex text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-red-900 ;
+        }
+      }
+    }
+  }
+}

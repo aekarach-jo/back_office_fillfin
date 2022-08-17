@@ -28,7 +28,7 @@ export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
     }, [])
 
     async function apiGetBank() {
-        const access_token = localStorage.getItem('access_token')
+        const access_token = localStorage.getItem('accessToken')
         await axios({
             method: 'GET',
             url: `${apiUrl}/api/admin/bankProvider/get`,
@@ -46,7 +46,7 @@ export default function Modal_edit({ bankData, onSetOpen, setBankData }) {
     }
 
     async function onEditBank() {
-        const access_token = localStorage.getItem('access_token')
+        const access_token = localStorage.getItem('accessToken')
         try {
             await axios({
                 method: 'POST',

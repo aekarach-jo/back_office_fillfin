@@ -50,8 +50,8 @@ export default function ReportDetail({ select }) {
                 Authorization: `Bearer ${access_token}`
             },
             data: {
-                start: date[0].startDate.toLocaleString(),
-                end: date[0].endDate.toLocaleString()
+                start: date[0].startDate ? moment(new Date(date[0].startDate)).format('YYYY-MM-DD HH:mm:ss') : null,
+                end: date[0].endDate ? moment(new Date(date[0].endDate)).format('YYYY-MM-DD HH:mm:ss') : null,
             }
         }).then(res => {
             if (res.data.status) {
@@ -125,7 +125,7 @@ export default function ReportDetail({ select }) {
 
             <div className="overflow-x-auto relative  max-w-[1100px] mx-auto border-2 rounded-lg">
                 {select == 'customerReport' && dataReport.length > 0 &&
-                    <ReportMember data={dataReport} rowsPerPage={13} searchText={searchText} />
+                    <ReportMember data={dataReport} rowsPerPage={14} searchText={searchText} />
                 }
                 {select == 'storeReport' && dataReport.length > 0 &&
                     <ReportStore data={dataReport} rowsPerPage={10} searchText={searchText} />

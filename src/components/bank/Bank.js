@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import Modal_add from './modal_add'
 import Modal_edit from './modal_edit'
+import st from '../../styles/allUse/content.module.scss'
 
 const Toast = Swal.mixin({
     toast: true,
@@ -82,10 +83,10 @@ export default function Bank() {
     }
 
     return (
-        <div className="h-screen flex-1 p-4 pt-12 animate-[fade_0.3s_ease-in-out]">
-            <h1 className="text-2xl font-semibold ">Manage Bank</h1>
+        <div className={`${st.content} animate-[fade_0.3s_ease-in-out]`}>
+            <p className={st.title}>จัดการบัญชีธนาคาร</p>
 
-            <div className="overflow-x-auto relative mt-5 max-w-[1100px] mx-auto border-2 rounded-lg">
+            <div className={st.contentTable}>
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>

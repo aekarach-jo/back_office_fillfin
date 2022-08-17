@@ -81,6 +81,7 @@ export default function StoreDetail() {
     }
 
     async function apiEditStore() {
+        console.log(inputProfileImage.current.files[0]);
         const formData = new FormData()
         formData.append('image', inputProfileImage.current.files[0])
         formData.append('storeCode', formEditStore.storeCode)

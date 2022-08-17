@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Table from './Table'
+import st from '../../styles/allUse/content.module.scss'
 
 function Admin() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
@@ -29,15 +30,14 @@ function Admin() {
 
 
     return (
-        <div className="h-screen flex-1 p-4 pt-12 max-h-screen overflow-auto animate-[fade_.3s_ease-in-out]">
-        <h1 className="text-2xl font-semibold ">Manage admin </h1>
-   
-        <div className="overflow-x-auto relative mt-10 max-w-[1100px] mx-auto border-2 rounded-lg">
-            {adminList !== undefined && adminList.length > 0 &&
-                <Table data={adminList} rowsPerPage={10} apiGetAdmin={apiGetAdmin}/>
-            }
+        <div className={`${st.content} animate-[fade_0.3s_ease-in-out]`}>
+            <p className={st.title}>จัดการบัญชีแอดมิน </p>
+            <div className={st.contentTable}>
+                {adminList !== undefined && adminList.length > 0 &&
+                    <Table data={adminList} rowsPerPage={10} apiGetAdmin={apiGetAdmin} />
+                }
+            </div>
         </div>
-    </div>
     )
 }
 

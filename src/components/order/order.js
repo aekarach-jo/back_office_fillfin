@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Table from './Table';
+import st from '../../styles/allUse/content.module.scss'
 
 export default function Order() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
@@ -37,13 +38,13 @@ export default function Order() {
     };
 
     return (
-        <div className="h-screen flex-1 p-4 pt-12 max-h-screen overflow-auto animate-[fade_0.3s_ease-in-out]">
-            <h1 className="text-2xl font-semibold ">Manage Order</h1>
-            <div className="relative mt-3">
-                <input onChange={e => setSearchText(e.target.value)} type="text" className='border-2 rounded flex px-3' placeholder='ค้นหาออเดอร์' style={{ margin: "0 0 0 auto" }} />
-                <i className="absolute right-3 text-gray-500/25 top-1.5 fa-solid fa-magnifying-glass"></i>
+        <div className={`${st.content} animate-[fade_0.3s_ease-in-out]`}>
+            <p className={st.title}>จัดการออเดอร์</p>
+            <div className={st.searchText}>
+                <input onChange={e => setSearchText(e.target.value)} type="text" placeholder='ค้นหาออเดอร์' style={{ margin: "0 0 0 auto" }} />
+                <i className="fa-solid fa-magnifying-glass"></i>
             </div>
-            <div className="overflow-x-auto relative mt-5  max-w-[1100px] mx-auto border-2 rounded-lg">
+            <div className={st.contentTable}>
                 {orderList !== undefined && orderList.length > 0 &&
                     <Table data={orderList} rowsPerPage={11} searchText={searchText} />
                 }

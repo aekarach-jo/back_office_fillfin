@@ -12,7 +12,7 @@ const Toast = Swal.mixin({
 })
 
 
-export default function EditPackage() {
+export default function AllPackage() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
     const access_token = useSelector((state) => (state.app.access_token))
     const [packageList, setPackageList] = useState()

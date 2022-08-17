@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import moment from 'moment';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import st from '../../../styles/account/accountDetail.module.scss'
 
 const Toast = Swal.mixin({
     toast: true,
@@ -80,78 +81,54 @@ export default function AccountDetail() {
     }
 
     async function apiChangePassword() {
-        // await axios({
-        //     method: 'POST',
-        //     url: `${apiUrl}/api/admin/content/update`,
-        //     headers: {
-        //         Authorization: `Bearer ${access_token}`,
-        //         'Content-Type': 'application/json'
-        //     },
-        //     data: JSON.stringify({
-        //         id: id,
-        //         title: title,
-        //         h1: h1,
-        //         h2: h2,
-        //         type: type,
-        //         content: content,
-        //         image_link: imageLink
-        //     })
-        // }).then(res => {
-        //     Toast.fire({
-        //         icon: 'success',
-        //         title: 'แก้ไขแล้ว'
-        //     })
-        // })
+        await axios({
+            method: 'POST',
+            url: `${apiUrl}/api/admin/member/changePassword`,
+            headers: {
+                Authorization: `Bearer ${access_token}`
+            },
+            data: {
+                memberCode: memberCode,
+                newPassword: password
+            }
+        }).then(res => {
+            Toast.fire({
+                icon: 'success',
+                title: 'แก้ไขแล้ว'
+            })
+        })
     }
 
     return (
-        <div className="h-screen flex-1 4 pt-12 max-h-screen overflow-auto animate-[fade_0.3s_ease-in-out]">
+        <div className={`${st.content} animate-[fade_0.3s_ease-in-out]`}>
             <h1 className="text-2xl font-semibold ">Change Password</h1>
-            <div className="relative m-3 text-left gap-2 flex align-middle ">
-                <button onClick={() => navigate(-1)} className='flex gap-2 align-center ' >
-                    <i className="flex my-auto text-pink-500 hover:text-[21px] duration-200 cursor-pointer text-xl fa-solid fa-circle-arrow-left" ></i>
-                    <p className='text-pink-500 '>Back to account</p>
+            <div className={st.wrapBtnBack}>
+                <button onClick={() => navigate(-1)} >
+                    <i className="fa-solid fa-circle-arrow-left" ></i>
+                    <p>Back to account</p>
                 </button>
             </div>
-            <div className="overflow-x-auto relative mt-5 border-2 rounded-lg  max-w-[1100px] mx-auto">
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div className={st.contentTable}>
+                <table>
+                    <thead>
                         <tr>
-                            <th scope="col" className="py-3 px-6">
-                                ID
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                name
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                Gender
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                createdAt
-                            </th>
-                            <th scope="col" className="py-3 px-6 text-center">
-                                option
-                            </th>
+                            <th scope="col"> ID </th>
+                            <th scope="col"> ชื่อผู้ใช้ (username) </th>
+                            <th scope="col"> เพศ </th>
+                            <th scope="col"> วันที่สมัครสมาชิก </th>
+                            <th scope="col">เพิ่มเติม </th>
                         </tr>
                     </thead>
                     <tbody>
                         {memberDetail &&
-                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {memberDetail.id}
-                                </th>
-                                <td className="py-2 px-6">
-                                    {memberDetail.username}
-                                </td>
-                                <td className="py-2 px-6">
-                                    {memberDetail.gender}
-                                </td>
-                                <td className="py-2 px-6">
-                                    <FormatDate dateTime={memberDetail.createdAt} />
-                                </td>
-                                <td className="py-2 px-6">
-                                    <div className="flex flex-row justify-center">
-                                        <button type="button" className="gap-2 flex text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-red-900">
+                            <tr>
+                                <td > {memberDetail.id}</td>
+                                <td>{memberDetail.username}</td>
+                                <td>{memberDetail.gender} </td>
+                                <td > <FormatDate dateTime={memberDetail.createdAt} /> </td>
+                                <td>
+                                    <div className={st.report}>
+                                        <button type="button" className="">
                                             <i className="my-auto fa-solid fa-circle-minus"></i>
                                             แจ้งปัญหา</button>
                                     </div>
@@ -161,39 +138,29 @@ export default function AccountDetail() {
                     </tbody>
                 </table>
 
-                <div className="flex flex-col items-center   py-10 px-5 flex-wrap bg-emerald-200/20 ">
+                <div className={st.contentChangePass}>
                     <form className="">
-                        <h2 className="text-left block mt-2 font-bold text-gray-900 dark:text-gray-300"
-                        >Password</h2>
+                        <p>Password</p>
                         <input
                             type="text"
                             defaultValue={password}
+                            maxLength={15}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="bg-gray-50 w-full border border-gray-300 
-                    text-gray-900 text-sm rounded-lg focus:ring-blue-500 
-                    focus:border-blue-500 block p-2.5 dark:bg-gray-700 
-                    dark:border-gray-600 dark:placeholder-gray-400 
-                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                        <h2 className="text-left block mt-2 font-bold text-gray-900 dark:text-gray-300"
-                        >Confirm Password</h2>
+                        />
+                        <p>Confirm Password</p>
                         <input
                             type="text"
                             defaultValue={confirmPassword}
+                            maxLength={15}
                             onChange={(e) => setConfirmPassword(e.target.value)
                             }
-                            className="bg-gray-50 w-full border border-gray-300 
-                        text-gray-900 text-sm rounded-lg focus:ring-blue-500 
-                        focus:border-blue-500 block p-2.5 dark:bg-gray-700 
-                        dark:border-gray-600 dark:placeholder-gray-400 
-                        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                        />
                     </form>
-                    <div className="flex flex-row justify-center pt-4">
-                        <button
-                            onClick={() => handleChangePassword()}
-                            type="button"
-                            className="gap-2 flex text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-red-900">
+                    <div className={st.wrapBtnChangePass}>
+                        <button onClick={() => handleChangePassword()} type="button" >
                             <i className="my-auto fa-solid fa-repeat"></i>
-                            เปลี่ยนรหัสผ่าน</button>
+                            เปลี่ยนรหัสผ่าน
+                        </button>
                     </div>
                 </div>
             </div>

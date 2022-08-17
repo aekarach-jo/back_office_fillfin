@@ -3,7 +3,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
-
+import st from '../../styles/allUse/content.module.scss'
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -99,10 +99,10 @@ export default function Review() {
     }
 
     return (
-        <div className="h-screen flex-1 p-4 pt-12  animate-[fade_0.3s_ease-in-out]">
-            <h1 className="text-2xl font-semibold ">Manage Review</h1>
+        <div className={`${st.content} animate-[fade_0.3s_ease-in-out]`}>
+            <h1 className={st.title}>Manage Review</h1>
 
-            <div className="overflow-x-auto relative mt-5  max-w-[1100px] mx-auto border-2 rounded-lg">
+            <div className={st.contentTable}>
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -143,8 +143,8 @@ export default function Review() {
                                 </td>
                                 <td className="py-2 px-6">
                                     <div className="flex flex-row justify-center ">
-                                        <button onClick={() => apiDeleteReview(data)} type="button" className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                        <i className="fa-solid fa-trash-can"></i>  ลบ</button>
+                                        <button onClick={() => apiDeleteReview(data)} type="button" className="text-white bg-[#ff0303] hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                            <i className="fa-solid fa-trash-can"></i>  ลบ</button>
                                     </div>
                                 </td>
                             </tr>

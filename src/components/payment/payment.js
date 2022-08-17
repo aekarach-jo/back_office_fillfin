@@ -53,7 +53,6 @@ export default function Payment() {
 
     return (
         <div className="h-screen flex-1 p-4 pt-12  max-h-screen overflow-auto animate-[fade_0.3s_ease-in-out]">
-            {/* <h1 className="text-2xl font-semibold">Manage payment</h1> */}
             <div className='flex flex-col gap-2 flex-wrap justify-center pt-6 max-w-[1100px] mx-auto'>
                 <Tab.Group>
                     <Tab.List className="w-[220px] h-[35px] flex flex-row mx-auto space-x-1 rounded-xl bg-pink-900/20 p-1">

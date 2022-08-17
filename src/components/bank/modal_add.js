@@ -28,7 +28,7 @@ export default function Modal_add({ onSetOpen, setBankData }) {
     }, [])
 
     async function apiGetBank() {
-        const access_token = localStorage.getItem('access_token')
+        const access_token = localStorage.getItem('accessToken')
         await axios({
             method: 'GET',
             url: `${apiUrl}/api/admin/bankProvider/get`,
@@ -43,7 +43,7 @@ export default function Modal_add({ onSetOpen, setBankData }) {
     }
 
     async function onCreateBank() {
-        const access_token = localStorage.getItem('access_token')
+        const access_token = localStorage.getItem('accessToken')
         try {
             await axios({
                 method: 'POST',
@@ -105,7 +105,7 @@ export default function Modal_add({ onSetOpen, setBankData }) {
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="h2"
-                                        className="pb-4 text-lg text-xl leading-6 text-gray-900"
+                                        className="pb-4 text-lg leading-6 text-gray-900"
                                     >
                                         เพิ่มบัญชีธนาคาร
                                     </Dialog.Title>

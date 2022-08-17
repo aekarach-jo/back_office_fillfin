@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Editor from './editor';
 import Swal from 'sweetalert2';
+import st from '../../../styles/content/contentDetail.module.scss'
 
 const Toast = Swal.mixin({
     toast: true,
@@ -101,64 +102,42 @@ export default function ContentDetail() {
         })
     }
     return (
-        <div className='h-screen flex-1 4 pt-12 max-h-screen overflow-auto animate-[fade_.3s_ease-in-out]'>
-            <h1 className="text-2xl font-semibold ">{contentType}</h1>
-            <div className="relative m-3 text-left gap-2 flex align-middle ">
-                <button onClick={() => navigate(-1)} className='flex gap-2 align-center ' >
-                    <i className="flex my-auto text-pink-500 hover:text-[21px] duration-200 cursor-pointer text-xl fa-solid fa-circle-arrow-left" ></i>
-                    <p className='text-pink-500 '>Back to content</p>
+        <div className={`${st.content} animate-[fade_0.3s_ease-in-out]`}>
+            <p className={st.contentType}>{contentType}</p>
+            <div className={st.wrapBtnBack}>
+                <button onClick={() => navigate(-1)}>
+                    <i className=" fa-solid fa-circle-arrow-left" ></i>
+                    <p>Back to content</p>
                 </button>
             </div>
-            <form className="relative my-5 border-2 rounded-lg p-8 max-w-[1100px] mx-auto">
-                <h2 className="text-left block my-2 font-bold text-gray-900 dark:text-gray-300"
-                >Title</h2>
+            <form className={st.contentBody}>
+                <p className={st.textTitle}>Title</p>
                 <input
                     type="text"
                     defaultValue={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="bg-gray-50 w-2/5 border border-gray-300 
-                    text-gray-900 text-sm rounded-lg focus:ring-blue-500 
-                    focus:border-blue-500 block p-2.5 dark:bg-gray-700 
-                    dark:border-gray-600 dark:placeholder-gray-400 
-                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                />
                 {(contentType !== 'terms-of-service' &&
                     contentType !== 'privacy-policy') &&
                     <>
-                        <h2 className="text-left block my-2 font-bold text-gray-900 dark:text-gray-300"
-                        >Description</h2>
+                        <p className={st.textTitle}>Description</p>
                         <textarea
                             type="text"
                             defaultValue={content}
                             onChange={(e) => setContent(e.target.value)}
-                            className="bg-gray-50 w-2/5 h-28 border border-gray-300 
-                    text-gray-900 text-sm rounded-lg focus:ring-blue-500 
-                    focus:border-blue-500 block p-2.5 dark:bg-gray-700 
-                    dark:border-gray-600 dark:placeholder-gray-400 
-                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-
-
-                        <h2 className="text-left block my-2 font-bold text-gray-900 dark:text-gray-300"
-                        >Type Description</h2>
+                        />
+                        <p className={st.textTitle}>Type Description</p>
                         <input
                             type="text"
                             defaultValue={h1}
                             onChange={(e) => setH1(e.target.value)}
-                            className="bg-gray-50 w-2/5 border border-gray-300 
-                    text-gray-900 text-sm rounded-lg focus:ring-blue-500 
-                    focus:border-blue-500 block p-2.5 dark:bg-gray-700 
-                    dark:border-gray-600 dark:placeholder-gray-400 
-                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                        <h2 className="text-left block my-2 font-bold text-gray-900 dark:text-gray-300"
-                        >Note</h2>
+                        />
+                        <p className={st.textTitle}>Note</p>
                         <input
                             type="text"
                             defaultValue={h2}
                             onChange={(e) => setH2(e.target.value)}
-                            className="bg-gray-50 w-2/5 border border-gray-300 
-                    text-gray-900 text-sm rounded-lg focus:ring-blue-500 
-                    focus:border-blue-500 block p-2.5 dark:bg-gray-700 
-                    dark:border-gray-600 dark:placeholder-gray-400 
-                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                        />
                     </>
                 }
 
@@ -166,8 +145,7 @@ export default function ContentDetail() {
                     contentType === 'privacy-policy') &&
                     <>
                         <div className='my-0'>
-                            <h2 className="text-left block my-2 font-bold text-gray-900 dark:text-gray-300"
-                            >Content</h2>
+                            <p className={st.textTitle}>Content</p>
                             <Editor
                                 value={content}
                                 name="description"
@@ -180,11 +158,7 @@ export default function ContentDetail() {
                         {/* {JSON.stringify(content)} */}
                     </>
                 }
-            <button
-                type="button"
-                className="text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900"
-                onClick={() => handleEdit()}
-            >แก้ไข</button>
+                <button className={st.btnEdit} type="button" onClick={() => handleEdit()}>แก้ไข</button>
             </form>
         </div >
     )

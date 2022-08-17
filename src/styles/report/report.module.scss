@@ -1,0 +1,17 @@
+.content {
+  @apply h-screen flex-1 p-4 pt-12 max-h-screen overflow-auto;
+
+  .title {
+    @apply text-2xl font-semibold;
+  }
+
+  .contentTab {
+    @apply flex flex-col gap-2 flex-wrap justify-center items-center pt-6 mx-auto;
+    max-width: 1100px;
+    .tabList {
+      @apply flex space-x-1 rounded-xl bg-pink-900/20 p-1;
+      width: 300px;
+      height: 35px;
+    }
+  }
+}

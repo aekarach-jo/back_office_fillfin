@@ -33,8 +33,8 @@ export default function Login() {
             access_token: res.data.access_token,
             refresh_token: res.data.refresh_token,
           }))
-          localStorage.setItem('access_token', res.data.access_token)
-          localStorage.setItem('refresh_token', res.data.refresh_token)
+          localStorage.setItem('accessToken', res.data.access_token)
+          localStorage.setItem('refreshToken', res.data.refresh_token)
           navigate('/');
         }
       })

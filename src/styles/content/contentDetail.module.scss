@@ -1,0 +1,47 @@
+.content {
+  @apply h-screen flex-1 p-4 pt-12 max-h-screen overflow-auto;
+
+  .contentType {
+    @apply text-2xl font-semibold;
+  }
+  .wrapBtnBack {
+    @apply relative m-3 text-left gap-2 flex align-middle;
+
+    button {
+      @apply flex gap-2 align-middle;
+
+      i {
+        @apply flex my-auto text-pink-500 duration-200 cursor-pointer text-xl;
+      }
+
+      p {
+        @apply text-pink-500;
+      }
+    }
+  }
+
+  .contentBody {
+    @apply relative border-2 rounded-lg p-2 mx-auto;
+    max-width: 1100px;
+    .textTitle {
+      @apply text-left block my-2 font-bold text-gray-900 dark:text-gray-300;
+    }
+    input {
+      @apply bg-gray-50 w-2/5 border border-gray-300 
+        text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+        focus:border-blue-500 block p-2.5 dark:bg-gray-700 
+        dark:border-gray-600 dark:placeholder-gray-400 
+        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    }
+    textarea {
+      @apply bg-gray-50 w-2/5 h-28 border border-gray-300 
+        text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+        focus:border-blue-500 block p-2.5 dark:bg-gray-700 
+        dark:border-gray-600 dark:placeholder-gray-400 
+        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    }
+    .btnEdit {
+      @apply text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 my-3 text-center mr-2 mb-2 dark:focus:ring-yellow-900;
+    }
+  }
+}

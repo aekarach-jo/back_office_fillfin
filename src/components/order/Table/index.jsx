@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useTable from "../../../hooks/useTable";
 import moment from "moment";
 import TableFooter from "../../sub_component/TableFooter";
-
+import st from "../../../styles/allUse/table.module.scss";
 const Table = ({ data, rowsPerPage, searchText }) => {
   const [page, setPage] = useState(1);
   const { slice, range } = useTable(data, page, rowsPerPage);
@@ -15,24 +15,15 @@ const Table = ({ data, rowsPerPage, searchText }) => {
 
   return (
     <>
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className={st.contentTable}>
+        <thead>
           <tr>
-            <th scope="col" className="py-3 px-6">
-              Order Number
-            </th>
-            <th scope="col" className="py-3 px-6">
-              name
-            </th>
-            <th scope="col" className="py-3 px-6">
-              createdAt
-            </th>
-            <th scope="col" className="py-3 px-6 text-center">
-              payment Status
-            </th>
-            <th scope="col" className="py-3 px-6 text-center">
-              option
-            </th>
+            <th scope="col"> เลขที่ออเดอร์</th>
+            <th scope="col"> ชื่อผู้สั่ง </th>
+            <th scope="col"> วันที่ซื้อ </th>
+            <th scope="col"> สถานะการชำระเงิน </th>
+            <th scope="col"> สถานะสินค้า </th>
+            <th scope="col"> เพิ่มเติม</th>
           </tr>
         </thead>
         <tbody>
@@ -49,38 +40,37 @@ const Table = ({ data, rowsPerPage, searchText }) => {
               }
             })
             .map((data, index) => (
-              <tr
-                key={index}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-              >
-                <th
-                  scope="row"
-                  className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  {data.orderNumber}
-                </th>
-                <td className="py-2 px-6">{data.name}</td>
-                <td className="py-2 px-6">
+              <tr key={index}>
+                <td> {data.orderNumber} </td>
+                <td>{data.name}</td>
+                <td>
                   <FormatDate dateTime={data.createdAt} />
                 </td>
-                <td className="py-2 px-6 text-center">
+                <td>
                   <p
                     className={`
-                                     ${
-                                       data.paymentStatus === "confirm" &&
-                                       "text-green-600"
-                                     }
-                                     ${
-                                       data.paymentStatus === "pending" &&
-                                       "text-yellow-500"
-                                     }
-                                     text-md font-semibold`}
+                    ${data.paymentStatus == "pending" && "text-yellow-500"}
+                    ${data.paymentStatus == "confirm" && "text-green-600"}
+                    ${data.paymentStatus == "failed" && "text-red-500"}
+                       text-md font-semibold`}
                   >
                     {data.paymentStatus}
                   </p>
                 </td>
-                <td className="py-2 px-6">
-                  <div className="flex flex-row justify-center">
+                <td>
+                  <p
+                    className={`
+                    ${data.status === "pending" && "text-yellow-500"}
+                    ${data.status === "shipping" && "text-orange-500"}
+                    ${data.status === "success" && "text-green-600"}
+                    ${data.status === "failed" && "text-red-500"}
+                       text-md font-semibold`}
+                  >
+                    {data.status}
+                  </p>
+                </td>
+                <td>
+                  <div className={st.wrapBtn}>
                     <Link to={`/order/detail?orderNumber=${data.orderNumber}`}>
                       <p
                         type="button"

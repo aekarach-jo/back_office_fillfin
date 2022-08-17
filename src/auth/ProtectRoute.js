@@ -13,10 +13,10 @@ function useAuth() {
     const refresh_token = useSelector((state) => (state.app.refresh_token))
     const access_token = useSelector((state) => (state.app.access_token))
     setInterval(() => {
-        const accessToken = localStorage.getItem('access_token')
+        const accessToken = localStorage.getItem('accessToken')
         const acc = jwt_decode(accessToken)
         const runTimePerSecond = (acc.exp - moment(Math.floor(Date.now() / 1000)));
-        console.log(runTimePerSecond);
+        // console.log(runTimePerSecond);
         if (runTimePerSecond < 30) {
             console.log('time out');
             RefreshToken(apiUrl, refresh_token)
@@ -43,12 +43,12 @@ async function RefreshToken(apiUrl, refresh_token) {
             })
         }).then(res => {
             console.log(res);
-            localStorage.setItem('access_token', res.data.token)
+            localStorage.setItem('accessToken', res.data.token)
         })
     }
     catch (err) {
         console.log(err);
-        localStorage.setItem('access_token', "")
+        localStorage.setItem('accessToken', "")
         window.location.reload()
         return false;
     }

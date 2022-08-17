@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import st from './liveChat.module.scss'
+import st from '../../styles/livechat/liveChat.module.scss'
 
 function LiveChat() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
@@ -10,6 +10,7 @@ function LiveChat() {
     const [fakeConversation, setFakeConversation] = useState([]);
     const [message, setMessage] = useState('')
     const [select, setSelect] = useState()
+
     useEffect(() => {
         API_GET_DATA().then(res => {
             setFakeConversation(res);
@@ -23,8 +24,13 @@ function LiveChat() {
                 }
             }, 500)
         })
+        document.addEventListener('visibilitychange', function () {
+            document.title = document.visibilityState;
+            console.log(document.visibilityState);
+        });
+    }, [])
 
-    }, [select])
+
 
     function API_GET_DATA() {
         return new Promise(resolve => {
@@ -80,6 +86,12 @@ function LiveChat() {
         }, 200)
     }
 
+    const something = (event) => {
+        if (event.keyCode === 13) {
+            onSendMessageClick()
+        }
+    }
+
     const numMock = [
         { id: 0, names: "123" },
         { id: 1, names: "qwe" },
@@ -115,28 +127,22 @@ function LiveChat() {
         { id: 7, names: "WEFWEF" },
     ]
 
-    const something = (event) => {
-        if (event.keyCode === 13) {
-            onSendMessageClick()
-        }
-    }
-
     return (
-        <div className="h-screen flex-1 p-4 max-h-screen overflow-auto animate-[fade_0.3s_ease-in-out]">
-            <h1 className="text-2xl font-semibold ">LiveChat</h1>
-            <div className="flex flex-row overflow-x-auto mt-5 border-2 border-pink-700 rounded-lg max-w-[1100px] h-[800px] mx-auto">
-                <div className={`w-[30%] px-4 m-4 flex flex-col gap-2 overflow-y-scroll ${st.displayScroller}`}>
+        <div className={`${st.content} animate-[fade_0.3s_ease-in-out]`}>
+            <p className={st.title}>LiveChat</p>
+            <div className={st.inContent}>
+                <div className={st.displayScroller}>
                     {numMock?.map((num, index) => (
-                            <div
-                                key={index}
-                                className={`${select == index && 'text-pink-500 border-2 border-pink-700 bg-pink-500 w-[95%] rounded-r-full'} duration-200 flex flex-row cursor-pointer bg-pink-100 w-[90%] min-h-[7%] rounded-full`}
-                                onClick={() => setSelect(index)}>
-                                <img className={`rounded-full  my-auto ml-4 w-[20%] p-2`} width={20} height={20} src="/assets/product.png" alt="image-contactUs" />
-                                <div className=" w-[80%] my-auto text-left pl-6">{num.names}</div>
-                            </div>
+                        <div
+                            key={index}
+                            className={`${select == index && 'text-pink-500 border-2 border-pink-700 bg-pink-500 w-[95%] rounded-r-full'} ${st.chatList}`}
+                            onClick={() => setSelect(index)}>
+                            <img className={`rounded-full  my-auto ml-4 w-[20%] p-2`} width={20} height={20} src="/assets/product.png" alt="image-contactUs" />
+                            <div className={st.username}>{num.names}</div>
+                        </div>
                     ))}
                 </div>
-                <div className='w-[70%]  p-4 flex flex-col gap-4 justify-between overflow-x-auto'>
+                <div className={st.boxChat}>
                     <div className={`${st.chatContent}`}>
                         <div className={st.chatHeader}>
                             <p>Fillfin Admin</p>
@@ -168,10 +174,7 @@ function LiveChat() {
                                 onKeyDown={(e) => something(e)}
                             />
                             <span className={st.iconSend}>
-                                <i
-                                    className="fa-solid fa-paper-plane"
-                                    onClick={onSendMessageClick}
-                                ></i>
+                                <i className="fa-solid fa-paper-plane" onClick={onSendMessageClick}></i>
                             </span>
                         </div>
                     </div>

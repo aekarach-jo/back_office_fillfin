@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import moment from "moment";
 import TableFooter from "../../../sub_component/TableFooter";
 import useTable from "../../../../hooks/useTable";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 
 const ReportOrsers = ({ data, rowsPerPage, searchText }) => {
+  const apiUrl = useSelector((state) => (state.app.apiPath))
   const [page, setPage] = useState(1);
   const { slice, range } = useTable(data, page, rowsPerPage);
 
@@ -14,9 +16,20 @@ const ReportOrsers = ({ data, rowsPerPage, searchText }) => {
     return <span>{dateTime}</span>;
   }
 
+  function handleShowSlip(slip){
+    Swal.fire({
+      imageUrl: apiUrl+slip,
+      imageWidth: 400,
+      imageHeight: 500,
+      imageAlt: 'Custom image',
+      showConfirmButton : false,
+      backdrop : true,
+      background : 'rgba(0,0,0,0)'
+  })
+  }
+
   return (
     <>
-      <p>Order</p>
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -30,7 +43,7 @@ const ReportOrsers = ({ data, rowsPerPage, searchText }) => {
               ที่อยู่
             </th>
             <th scope="col" className="py-3 px-6">
-              Tel.
+              เบอร์โทรศัพท์
             </th>
             <th scope="col" className="py-3 px-6 text-center">
               ราคาขาย
@@ -69,34 +82,19 @@ const ReportOrsers = ({ data, rowsPerPage, searchText }) => {
                   scope="row"
                   className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  {data.username}
+                  {data.orderNumber}
                 </th>
-                <td className="py-2 px-6">{data.name}</td>
-                <td className="py-2 px-6">{data.gender}</td>
+                <td className="py-2 px-6">{data.cusName}</td>
+                <td className="py-2 px-6">{data.address}</td>
+                <td className="py-2 px-6">{data.phone}</td>
+                <td className="py-2 px-6">{data.netPrice}</td>
+                <td className="py-2 px-6">{data.totalPrice}</td>
+                <td className="py-2 px-6">{data.paymentStatus}</td>
                 <td className="py-2 px-6">
-                  <FormatDate dateTime={data.createdAt} />
+                  <img className="cursor-pointer" src={`${apiUrl}${data.slip}`} alt="slip" onClick={() => handleShowSlip(data.slip)} />
                 </td>
-                <td className="py-2 px-6 text-center">
-                    <p className={`
-                        ${data.status_payment == 'confirm' && 'text-green-600'}
-                        ${data.status_payment == 'pending' && 'text-yellow-500'}
-                        ${data.status_payment == 'error' && 'text-red-500'}
-                          text-md font-semibold`}>{data.status_payment}
-                    </p>
-                </td>
-                <td className="py-2 px-6">
-                  <div className="flex flex-row justify-center">
-                    <Link to={`/payment/detail?payment=${data.paymentId}&&member=${data.username}`}>
-                      <p
-                        type="button"
-                        className="m-auto gap-2 flex text-white bg-pink-400 hover:bg-pink-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-yellow-900"
-                      >
-                        <i className="fa-solid fa-eye my-auto"></i>
-                        ดูข้อมูลการชำระ
-                      </p>
-                    </Link>
-                  </div>
-                </td>
+                {/* <td className="py-2 px-6">{data.note}</td> */}
+
               </tr>
             ))}
         </tbody>

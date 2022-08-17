@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import st from "../../../styles/allUse/table.module.scss";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -82,57 +83,57 @@ const Table = ({ data, rowsPerPage, apiGetContent }) => {
 
   return (
     <>
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className={st.contentTable}>
+        <thead>
           <tr>
-            <th scope="col" className="py-3 px-6">
-              Name
-            </th>
-            <th scope="col" className="py-3 px-6">
-              email
-            </th>
-            <th scope="col" className="py-3 px-6">
-              createdAt
-            </th>
-            <th scope="col" className="py-3 px-6 text-center">
-              permission
-            </th>
-            <th scope="col" className="py-3 px-6 text-center">
-              status
-            </th>
-            <th scope="col" className="py-3 px-6 text-center">
-              option
-            </th>
+            <th scope="col"> ชื่อผู้ใช้ </th>
+            <th scope="col"> อีเมลล์ </th>
+            <th scope="col"> วันที่สมัคร </th>
+            <th scope="col"> สิทธิ์ </th>
+            <th scope="col"> สถานะ</th>
+            <th scope="col"> เพิ่มเติม</th>
           </tr>
         </thead>
         <tbody>
           {slice?.map((data, index) => (
             <Fragment key={index}>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td className="py-2 px-6">{data.username}</td>
-                <td className="py-2 px-6">{data.email}</td>
-                <td className="py-2 px-6">
+              <tr>
+                <td>{data.username}</td>
+                <td>{data.email}</td>
+                <td>
                   <FormatDate dateTime={data.createdAt} />
                 </td>
-                <td className="py-2 px-6 ">
-                  <p className=
-                    {` text-md font-semibold
-                      ${data.statusConfirm === "confirm" && "text-green-600 text-center" }
-                      ${data.statusConfirm === "pending" && "text-yellow-500 text-center"}
+                <td>
+                  <p
+                    className={` text-md font-semibold
+                      ${
+                        data.statusConfirm === "confirm" &&
+                        "text-green-600 text-center"
+                      }
+                      ${
+                        data.statusConfirm === "pending" &&
+                        "text-yellow-500 text-center"
+                      }
                     `}
                   >
                     {data.statusConfirm}
                   </p>
                 </td>
-                <td className="py-2 px-6 text-center">{data.permission}</td>
-                <td className="py-2 px-6">
+                <td>{data.permission}</td>
+                <td>
                   <div className="flex flex-row justify-center gap-2">
                     <Link to={`/admin/detail?code=${data.adminCode}`}>
                       <button
                         type="button"
                         className={`
-                        ${data.statusConfirm === 'pending' && 'text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-300 dark:focus:ring-yellow-900'}
-                        ${data.statusConfirm === 'confirm' && 'text-white bg-green-600 hover:bg-green-700 focus:ring-green-300 dark:focus:ring-green-900'}
+                        ${
+                          data.statusConfirm === "pending" &&
+                          "text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-300 dark:focus:ring-yellow-900"
+                        }
+                        ${
+                          data.statusConfirm === "confirm" &&
+                          "text-white bg-green-600 hover:bg-green-700 focus:ring-green-300 dark:focus:ring-green-900"
+                        }
                         
                          focus:outline-none focus:ring-4 
                          font-medium rounded-xl text-sm px-5 py-1.5 text-center mr-2 mb-2  `}

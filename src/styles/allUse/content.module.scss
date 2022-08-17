@@ -1,0 +1,23 @@
+.content {
+  @apply h-screen flex-1 p-4 pt-10 max-h-screen overflow-auto;
+
+  .title {
+    @apply text-2xl font-semibold;
+  }
+  .searchText {
+    @apply relative;
+
+    input {
+      @apply border-2 rounded flex px-3;
+    }
+
+    i {
+      @apply absolute right-3 text-gray-500/25 top-1.5;
+    }
+  }
+
+  .contentTable {
+    @apply overflow-x-auto relative mt-5 mx-auto border-2 rounded-lg;
+    max-width: 1100px;
+  }
+}

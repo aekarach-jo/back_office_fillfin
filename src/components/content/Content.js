@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Table from './Table'
+import st from '../../styles/allUse/content.module.scss'
 
 function Content() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
@@ -28,16 +29,15 @@ function Content() {
 
 
     return (
-        <div className="h-screen flex-1 p-4 pt-12 max-h-screen overflow-auto animate-[fade_.3s_ease-in-out]">
-        <h1 className="text-2xl font-semibold ">Manage Content </h1>
-   
-        <div className="overflow-x-auto relative mt-10 max-w-[1100px] mx-auto border-2 rounded-lg">
-            {contentList !== undefined && contentList.length > 0 &&
-                <Table data={contentList} rowsPerPage={10} apiGetContent={apiGetContent}/>
-            }
+        <div className={`${st.content} animate-[fade_0.3s_ease-in-out]`}>
+            <p className={st.title}>จัดการบทความ</p>
+            <div className={st.contentTable}>
+                {contentList !== undefined && contentList.length > 0 &&
+                    <Table data={contentList} rowsPerPage={10} apiGetContent={apiGetContent} />
+                }
+            </div>
         </div>
-    </div>
     )
 }
 
-export default Content
+export default Content;

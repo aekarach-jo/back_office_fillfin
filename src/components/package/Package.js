@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Tab } from '@headlessui/react'
-import EditPackage from './editPackage'
-import PackageOrder from '../payment/paymentOrder/paymentOrder'
-
+import st from '../../styles/package/package.module.scss'
+import AllPackage from './allPackage'
+import EditPackage from './editPackage/editPackage'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -15,11 +15,11 @@ export default function Package() {
     })
 
     return (
-        <div className="h-screen flex-1 p-4 pt-12  max-h-screen overflow-auto animate-[fade_0.3s_ease-in-out]">
-            <h1 className="text-2xl font-semibold">Manage Package</h1>
-            <div className='flex flex-col gap-2 flex-wrap justify-center items-center pt-6 max-w-[1100px] mx-auto'>
+        <div className={`${st.content} animate-[fade_0.3s_ease-in-out]`}>
+            <p className={st.title}>จัดการแพ็คเก็จ</p>
+            <div className={st.contentTab}>
                 <Tab.Group>
-                    <Tab.List className="w-[220px] h-[35px] flex space-x-1 rounded-xl bg-pink-900/20 p-1">
+                    <Tab.List className={st.tabList}>
                         {Object.keys(categories).map((category) => (
                             <Tab
                                 key={category}
@@ -37,14 +37,14 @@ export default function Package() {
                             </Tab>
                         ))}
                     </Tab.List>
-                    <Tab.Panels className="mt-2">
+                    <Tab.Panels >
                         <Tab.Panel
                             className={classNames(
                                 'rounded-xl bg-white ',
                                 'ring-white ring-opacity-60 ring-offset-2 '
                             )}
                         >
-                            <EditPackage />
+                            <AllPackage />
                         </Tab.Panel>
                         <Tab.Panel
                             className={classNames(
@@ -52,7 +52,7 @@ export default function Package() {
                                 'ring-white ring-opacity-60 ring-offset-2 '
                             )}
                         >
-                            {/* <PackageOrder /> */}
+                            <EditPackage />
                         </Tab.Panel>
                     </Tab.Panels>
                 </Tab.Group>
