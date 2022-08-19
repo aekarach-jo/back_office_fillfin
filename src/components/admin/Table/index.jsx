@@ -16,7 +16,7 @@ const Toast = Swal.mixin({
   timerProgressBar: true,
 });
 
-const Table = ({ data, rowsPerPage, apiGetContent }) => {
+const Table = ({ data, rowsPerPage, apiGetAdmin }) => {
   const apiUrl = useSelector((state) => state.app.apiPath);
   const access_token = useSelector((state) => state.app.access_token);
   const [page, setPage] = useState(1);
@@ -28,7 +28,6 @@ const Table = ({ data, rowsPerPage, apiGetContent }) => {
         icon: "warning",
         position: "center",
         title: "ยืนยันการเปลี่ยนสถานะ",
-        text: "การปิดสถานะ จะส่งผลต่อการมองเห็นของลูกค้า",
         confirmButtonText: "ยืนยัน",
         cancelButtonText: "ยกเลิก",
         showConfirmButton: true,
@@ -65,7 +64,7 @@ const Table = ({ data, rowsPerPage, apiGetContent }) => {
           display: status,
         },
       }).then((res) => {
-        apiGetContent();
+        apiGetAdmin();
         Toast.fire({
           icon: "success",
           title: "แก้ไขแล้ว",
@@ -87,7 +86,7 @@ const Table = ({ data, rowsPerPage, apiGetContent }) => {
         <thead>
           <tr>
             <th scope="col"> ชื่อผู้ใช้ </th>
-            <th scope="col"> อีเมลล์ </th>
+            <th scope="col"> อีเมล </th>
             <th scope="col"> วันที่สมัคร </th>
             <th scope="col"> สิทธิ์ </th>
             <th scope="col"> สถานะ</th>
@@ -103,42 +102,41 @@ const Table = ({ data, rowsPerPage, apiGetContent }) => {
                 <td>
                   <FormatDate dateTime={data.createdAt} />
                 </td>
+                <td>{data.permission}</td>
                 <td>
                   <p
-                    className={` text-md font-semibold
-                      ${
-                        data.statusConfirm === "confirm" &&
-                        "text-green-600 text-center"
-                      }
-                      ${
-                        data.statusConfirm === "pending" &&
-                        "text-yellow-500 text-center"
-                      }
-                    `}
+                    className={`
+                                ${
+                                  data.status === "pending" &&
+                                  "text-yellow-500 text-center"
+                                }
+                                ${
+                                  data.status === "active" &&
+                                  "text-green-600 text-center"
+                                }
+                                ${
+                                  data.status === "inactive" &&
+                                  "text-orange-600 text-center"
+                                }
+                                ${
+                                  data.status === "banned" &&
+                                  "text-red-600 text-center"
+                                }
+                                text-md font-semibold`}
                   >
-                    {data.statusConfirm}
+                    {data.status}
                   </p>
                 </td>
-                <td>{data.permission}</td>
                 <td>
                   <div className="flex flex-row justify-center gap-2">
                     <Link to={`/admin/detail?code=${data.adminCode}`}>
                       <button
                         type="button"
-                        className={`
-                        ${
-                          data.statusConfirm === "pending" &&
-                          "text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-300 dark:focus:ring-yellow-900"
-                        }
-                        ${
-                          data.statusConfirm === "confirm" &&
-                          "text-white bg-green-600 hover:bg-green-700 focus:ring-green-300 dark:focus:ring-green-900"
-                        }
-                        
+                        className={`bg-yellow-400 text-white hover:bg-yellow-600 duration-100
                          focus:outline-none focus:ring-4 
                          font-medium rounded-xl text-sm px-5 py-1.5 text-center mr-2 mb-2  `}
                       >
-                        จัดการ
+                        ตั้งค่า
                       </button>
                     </Link>
                   </div>

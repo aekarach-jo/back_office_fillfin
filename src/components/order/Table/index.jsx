@@ -18,6 +18,7 @@ const Table = ({ data, rowsPerPage, searchText }) => {
       <table className={st.contentTable}>
         <thead>
           <tr>
+            <th scope="col"> </th>
             <th scope="col"> เลขที่ออเดอร์</th>
             <th scope="col"> ชื่อผู้สั่ง </th>
             <th scope="col"> วันที่ซื้อ </th>
@@ -41,12 +42,22 @@ const Table = ({ data, rowsPerPage, searchText }) => {
             })
             .map((data, index) => (
               <tr key={index}>
-                <td> {data.orderNumber} </td>
-                <td>{data.name}</td>
-                <td>
-                  <FormatDate dateTime={data.createdAt} />
+                <td >
+                  {!data.isRead && (
+                    <span className="flex my-auto h-3 w-3">
+                      <span className="flex animate-ping absolute h-3 w-3 rounded-full bg-green-400 opacity-75"></span>
+                      <span className="flex relative rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                  )}
                 </td>
                 <td>
+                  <p className={`text-left ${!data.isRead && 'font-bold'}`}>{data.orderNumber}</p>
+                </td>
+                <td className={`${!data.isRead && 'font-bold'}`}>{data.name}</td>
+                <td className={`${!data.isRead && 'font-bold'}`}>
+                  <FormatDate dateTime={data.createdAt} />
+                </td>
+                <td className={`${!data.isRead && 'font-bold'}`}>
                   <p
                     className={`
                     ${data.paymentStatus == "pending" && "text-yellow-500"}

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import ManageCreate from './manageCreate/manage_create';
+import PopupChangePass from './popupChangePass';
 import UploadVideo from './uploadVideo';
 
 const Toast = Swal.mixin({
@@ -27,6 +28,8 @@ export default function StoreDetail() {
     const inputProfileImage = useRef([])
     const [imageObj, setImageobj] = useState()
     const [formEditStore, setFormEditStore] = useState()
+    const [isOpen, setIsOpen] = useState(false)
+
 
     useEffect(() => {
         apiGetStore()
@@ -81,7 +84,6 @@ export default function StoreDetail() {
     }
 
     async function apiEditStore() {
-        console.log(inputProfileImage.current.files[0]);
         const formData = new FormData()
         formData.append('image', inputProfileImage.current.files[0])
         formData.append('storeCode', formEditStore.storeCode)
@@ -143,6 +145,11 @@ export default function StoreDetail() {
         return <span>{dateTime}</span>
     }
 
+
+    function onSetOpen() {
+        setIsOpen(!isOpen)
+    }
+
     return (
         <div className="h-screen flex-1 p-4  max-h-screen overflow-auto  animate-[fade_0.3s_ease-in-out]">
             <div className="relative m-3 text-left gap-2 flex align-middle ">
@@ -202,9 +209,9 @@ export default function StoreDetail() {
                             </td>
                             <td className="py-2 px-6">
                                 <div className="flex flex-row justify-center">
-                                    <button type="button" className="gap-2 flex text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-red-900">
-                                        <i className="my-auto fa-solid fa-circle-minus"></i>
-                                        แจ้งปัญหา</button>
+                                    <button onClick={() => setIsOpen(!isOpen)} type="button" className="gap-2 flex text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-red-900">
+                                        <i className="my-auto fa-solid fa-repeat"></i>
+                                        เปลี่ยนรหัสผ่าน</button>
                                 </div>
                             </td>
                         </tr>
@@ -334,6 +341,9 @@ export default function StoreDetail() {
                     <div className="flex-col mt-2 items-center w-full">
                         <ManageCreate />
                     </div>
+                    {isOpen &&
+                        <PopupChangePass onSetOpen={onSetOpen} />
+                    }
                 </div>
             </div>
         </div >

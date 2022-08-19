@@ -7,7 +7,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Product({productList, apiGetStore}) {
+export default function Product({ productList, apiGetStore }) {
   let [categories] = useState({
     'สินค้าทั้งหมด': [],
     'เพิ่มสินค้า': [],
@@ -41,7 +41,9 @@ export default function Product({productList, apiGetStore}) {
               'ring-white ring-opacity-60 ring-offset-2 '
             )}
           >
-            <AllProduct productList={productList} apiGetStore={apiGetStore}/>
+            {/* ---------------------------------------------------------- */}
+            <AllProduct productList={productList} apiGetStore={apiGetStore} />
+            {/* ---------------------------------------------------------- */}
           </Tab.Panel>
           <Tab.Panel
             className={classNames(
@@ -49,7 +51,9 @@ export default function Product({productList, apiGetStore}) {
               'ring-white ring-opacity-60 ring-offset-2 '
             )}
           >
-            <CreateProduct apiGetStore={apiGetStore}/>
+            {/* ---------------------------------------------------------- */}
+            <CreateProduct apiGetStore={apiGetStore} />
+            {/* ---------------------------------------------------------- */}
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import ScrollToTop from '../../../../sub_component/scrollToTop/scrollToTop'
@@ -13,12 +13,17 @@ const Toast = Swal.mixin({
     timerProgressBar: true,
 })
 
+
 export default function AllProduct({ productList, apiGetStore }) {
     console.log(productList);
     const access_token = useSelector((state) => (state.app.access_token))
     const apiUrl = useSelector((state) => (state.app.apiPath))
     const [isDelete, setIsDelete] = useState(false)
     const [select, setSelect] = useState()
+    const [priorityNumber, setPriorityNumber] = useState()
+    const [onChoose, setOnChoose] = useState()
+    useEffect(() => {
+    }, [])
 
     function handleConfirmDelete(product_code) {
         Swal.fire({
@@ -54,8 +59,26 @@ export default function AllProduct({ productList, apiGetStore }) {
             })
         })
     }
-
-
+    async function setPriority(productCode) {
+        await axios({
+            method: 'POST',
+            url: `${apiUrl}/api/admin/storeProduct/setPriority`,
+            headers: {
+                Authorization: `Bearer ${access_token}`
+            },
+            data: {
+                productCode: productCode.toString(),
+                priority: parseInt(priorityNumber)
+            }
+        }).then(() => {
+            Toast.fire({
+                icon: 'success',
+                title: 'สำเร็จ'
+            }).then(() => {
+                apiGetStore()
+            })
+        })
+    }
 
     async function apiSetRecommend(product_code, recommend) {
         if (recommend == 'yes') {
@@ -74,11 +97,10 @@ export default function AllProduct({ productList, apiGetStore }) {
                 recommend: recommend
             }
         }).then(() => {
+            apiGetStore()
             Toast.fire({
                 icon: 'success',
                 title: 'สำเร็จ'
-            }).then(() => {
-                apiGetStore()
             })
         })
     }
@@ -103,24 +125,16 @@ export default function AllProduct({ productList, apiGetStore }) {
                                 ></i>
                                 <i className="fa-solid fa-trash-can absolute right-8 text-red-500 z-0"></i>
                                 {productList &&
-                                    <div className="flex  space-x-3 absolute right-20">
-                                        <label className="inline-flex relative items-center mx-auto cursor-pointer">
-                                            <input
-                                                type="checkbox"
-                                                className="sr-only peer"
-                                                defaultChecked={data.recommend == "yes" ? true : false}
-                                                onClick={() => apiSetRecommend(data.product_code, data.recommend)} />
-                                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 
-                                            peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 peer-checked:after:translate-x-full 
-                                            peer-checked:after:border-gray-300 after:content-[''] after:absolute after:top-0.5 after:left-[2px]
-                                             after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all 
-                                             dark:border-gray-600 peer-checked:bg-yellow-400" />
-                                        </label>
+                                    <div className="flex space-x-3 absolute right-16 ">
+                                        <div className="inline-flex  items-center mx-auto cursor-pointer">
+                                            <i className={`
+                                            ${data.recommend == 'yes' && 'text-yellow-500'} 
+                                            ${data.recommend == 'no' && 'fa-regular'} 
+                                            text-lg cursor-pointer fa-solid fa-star  hover:text-yellow-500 duration-200`}
+                                                onClick={() => apiSetRecommend(data.product_code, data.recommend)}></i>
+                                        </div>
                                     </div>
                                 }
-                                {/* <i className="fa-regular fa-star  absolute right-20 text-yellow-500 z-10 hover:z-0"></i>
-                                <i className="cursor-pointer fa-solid fa-star  absolute right-20 text-white hover:text-yellow-500  z-0 hover:z-10 duration-200"
-                                    onClick={() => apiSetRecommend(data.product_code)}></i> */}
                                 {data.clip == 'yes' &&
                                     <div className={`${st.column_gift}`}>
                                         <i className="fa-solid fa-gift"></i>
@@ -130,9 +144,33 @@ export default function AllProduct({ productList, apiGetStore }) {
                                 <div className={st.product_name}>
                                     <p>{data.name}</p>
                                 </div>
+                                <div className="flex space-x-3 absolute right-7">
+                                    <div className='flex flex-col justify-between py-2 h-20 w-5 scale-90'>
+                                        {priorityNumber <= data.priority && onChoose == index &&
+                                            <i className="text-lg font-bold opacity-70 text-gray-700 hover:opacity-100 hover:shadow-md fa-solid fa-arrow-up duration-200 cursor-pointer"
+                                                onClick={() => setPriority(data.product_code)}
+                                            ></i>
+                                        }
+                                        <input
+                                            className='w-5 p-1'
+                                            type="text"
+                                            // defaultValue=''
+                                            placeholder={data.priority}
+                                            onChange={(e) => (setPriorityNumber(e.target.value.trim("")), setOnChoose(index))} />
+                                        {priorityNumber >= data.priority && onChoose == index &&
+                                            <i className="text-lg font-bold opacity-70 text-gray-700 hover:opacity-100 hover:shadow-md fa-solid fa-arrow-down duration-200 cursor-pointer"
+                                                onClick={() => setPriority(data.product_code)}
+                                            ></i>
+                                        }
+                                    </div>
+                                </div>
                                 <div className={st.detail_text}>
                                     <p>รายละเอียด : </p>
                                     <p>{data.content_product}</p>
+                                </div>
+                                <div className={st.price_text}>
+                                    <p>ราคา : </p>
+                                    <p>{data.price}</p>
                                 </div>
                                 <div className={st.column_img}>
                                     <ShowImagePost image={data.product_img} />

@@ -28,21 +28,22 @@ export default function ReportDetail({ select }) {
     ]);
 
     useEffect(() => {
-        console.log(reset);
-        if (reset) {
-            setDate([
-                {
-                    startDate: null,
-                    endDate: null,
-                    key: "selection"
-                }
-            ])
-        } else {
-            apiGetReport()
-        }
+        apiGetReport()
     }, [reset])
 
+    function resetHandler(){
+        setReset(true)
+        setDate([
+            {
+                startDate: null,
+                endDate: null,
+                key: "selection"
+            }
+        ])
+    }
+
     async function apiGetReportToExport() {
+        setReset(false)
         await axios({
             method: 'POST',
             url: `${_exportData.current}/export`,
@@ -96,7 +97,9 @@ export default function ReportDetail({ select }) {
                         }
                     </div>
                     {dateStart !== null &&
-                        <button className='cursor-pointer animate-[wiggle_0.3s_ease-in-out_infinite] rounded hover:bg-yellow-500 px-1 my-auto duration-100 hover:text-white' onClick={() => setReset(!reset)}>
+                        <button
+                            className='cursor-pointer animate-[wiggle_0.3s_ease-in-out_infinite] rounded hover:bg-yellow-500 px-1 my-auto duration-100 hover:text-white'
+                            onClick={resetHandler}>
                             รีเซ็ท
                         </button>
                     }

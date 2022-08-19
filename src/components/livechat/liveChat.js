@@ -1,78 +1,134 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import st from '../../styles/livechat/liveChat.module.scss'
+import axios from 'axios'
+const { io } = require("socket.io-client");
 
 function LiveChat() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
+    const apiSocket = useSelector((state) => (state.app.socketPath))
     const access_token = useSelector((state) => (state.app.access_token))
 
     const chatBody = useRef(0)
-    const [fakeConversation, setFakeConversation] = useState([]);
     const [message, setMessage] = useState('')
     const [select, setSelect] = useState()
+    const [selectUser, setSelectUser] = useState()
+    const socket = io(apiSocket);
+    const [userList, setUserList] = useState([])
+    const [chatList, setChatList] = useState([])
+    const [conversation, setConversation] = useState([]);
+    const [statusRead, setStatusRead] = useState(true)
 
     useEffect(() => {
-        API_GET_DATA().then(res => {
-            setFakeConversation(res);
-            setTimeout(() => {
+
+        apiGetChat()
+        if (selectUser) {
+            apiReadChat()
+        }
+    }, [selectUser])
+
+    async function apiGetChat() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `${apiUrl}/api/admin/getOldChat`,
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                },
+            }).then(res => {
+                const filterChat = res.data.allMessage.filter(user => user.memberCode == selectUser)
+                console.log(filterChat);
+                setConversation(filterChat);
+                setChatList(res.data.allMessage);
+                setUserList(res.data.allMember)
+                setStatusRead(res.data.allMember.isRead)
                 if (chatBody.current != null) {
                     chatBody.current
                         .scrollTo({
-                            behavior: "smooth",
+                            // behavior: "smooth",
                             top: chatBody.current.scrollHeight,
                         })
                 }
-            }, 500)
-        })
-        document.addEventListener('visibilitychange', function () {
-            document.title = document.visibilityState;
-            console.log(document.visibilityState);
-        });
-    }, [])
-
-
-
-    function API_GET_DATA() {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve([
-                    {
-                        id: 1,
-                        is_admin: true,
-                        message: 'Admin'
-                    },
-                    {
-                        id: 2,
-                        is_admin: false,
-                        message: 'member'
-                    },
-                    {
-                        id: 3,
-                        is_admin: true,
-                        message: 'Admin'
-                    },
-                    {
-                        id: 4,
-                        is_admin: true,
-                        message: 'Admin'
-                    },
-                    {
-                        id: 5,
-                        is_admin: false,
-                        message: 'member'
-                    },
-
-                ])
-            }, 350)
-        })
+            })
+        } catch (err) {
+            console.log(err);
+        }
     }
 
-    function onSendMessageClick() {
-        setFakeConversation(prev => ([
+    async function apiReadChat() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `${apiUrl}/api/admin/readChat/${selectUser}`,
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                },
+            }).then(() => {
+                apiGetChat()
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+
+    socket.on("connect", () => {
+        console.log('connected');
+    });
+
+    socket.on('admin', (req, res) => {
+        console.log(res)
+        console.log(req)
+        // document.addEventListener('visibilitychange', function () {
+        //     if (document.visibilityState == 'hidden') {
+        //         document.title = "Fillfin [มีข้อความใหม่]"
+        //     }
+        // });
+        onSetChatMessage(req)
+    })
+
+    function onSetChatMessage(req) {
+        setUserList(prev => ([
             ...prev,
             {
-                id: Math.random(),
-                is_admin: false,
+                username: req.username,
+            }
+        ]))
+        setChatList(prev => ([
+            ...prev,
+            {
+                username: req.username,
+                role: req.role,
+                message: req.message
+            }
+        ]))
+
+        setConversation(prev => ([
+            ...prev,
+            {
+                username: req.username,
+                role: req.role,
+                message: req.message
+            }
+        ]))
+        apiGetChat()
+        setMessage('')
+        setTimeout(() => {
+            chatBody.current
+                .scrollTo({
+                    behavior: "smooth",
+                    top: chatBody.current.scrollHeight,
+                })
+        }, 200)
+    }
+
+
+    async function onSendMessageClick() {
+        setConversation(prev => ([
+            ...prev,
+            {
+                role: 'admin',
                 message: message
             }
         ]))
@@ -84,6 +140,24 @@ function LiveChat() {
                     top: chatBody.current.scrollHeight,
                 })
         }, 200)
+        try {
+            await axios({
+                method: 'POST',
+                url: `${apiUrl}/api/admin/chatToMember`,
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                },
+                data: {
+                    memberCode: selectUser,
+                    message: message,
+                }
+            }).then(res => {
+
+                console.log(res);
+            })
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const something = (event) => {
@@ -92,92 +166,72 @@ function LiveChat() {
         }
     }
 
-    const numMock = [
-        { id: 0, names: "123" },
-        { id: 1, names: "qwe" },
-        { id: 2, names: "ase" },
-        { id: 3, names: "asd" },
-        { id: 4, names: "asd" },
-        { id: 5, names: "xcxc" },
-        { id: 6, names: "sd" },
-        { id: 7, names: "sdf" },
-        { id: 0, names: "sdf" },
-        { id: 1, names: "sds" },
-        { id: 2, names: "sdf" },
-        { id: 3, names: "sdf" },
-        { id: 4, names: "sdf" },
-        { id: 5, names: "ghj" },
-        { id: 6, names: "fgh" },
-        { id: 7, names: "sds" },
-        { id: 0, names: "ghj" },
-        { id: 1, names: "ghj" },
-        { id: 2, names: "jjkl" },
-        { id: 3, names: "gh" },
-        { id: 4, names: "aDS" },
-        { id: 5, names: "WEWE" },
-        { id: 6, names: "SADF" },
-        { id: 7, names: "SDF" },
-        { id: 0, names: "ASDF" },
-        { id: 1, names: "ASDF" },
-        { id: 2, names: "EWE" },
-        { id: 3, names: "SDSD" },
-        { id: 4, names: "DFDF" },
-        { id: 5, names: "SD" },
-        { id: 6, names: "WEFWEF" },
-        { id: 7, names: "WEFWEF" },
-    ]
-
     return (
         <div className={`${st.content} animate-[fade_0.3s_ease-in-out]`}>
             <p className={st.title}>LiveChat</p>
             <div className={st.inContent}>
-                <div className={st.displayScroller}>
-                    {numMock?.map((num, index) => (
+                <div className={`${st.displayScroller}`}>
+                    <div className='w-full h-10 rounded-t-md mb-4 bg-[#f4a4ce] '>
+                        <p className="my-auto h-full p-1 text-lg text-white">รายการแชท</p>
+                    </div>
+                    {userList?.map((user, index) => (
                         <div
                             key={index}
                             className={`${select == index && 'text-pink-500 border-2 border-pink-700 bg-pink-500 w-[95%] rounded-r-full'} ${st.chatList}`}
-                            onClick={() => setSelect(index)}>
+                            onClick={() => (setSelect(index), setSelectUser(user.memberCode))}>
                             <img className={`rounded-full  my-auto ml-4 w-[20%] p-2`} width={20} height={20} src="/assets/product.png" alt="image-contactUs" />
-                            <div className={st.username}>{num.names}</div>
+                            <div className={st.username}>{user.username}</div>
+                            {user.isRead == 0 &&
+                                <div className='relative'>
+                                    <div className='w-[13px] h-[13px] rounded-full bg-green-500 absolute right-1 top-5'></div>
+                                    <div className='w-[13px] h-[13px] rounded-full bg-green-500 animate-ping absolute right-1 top-5'></div>
+                                </div>
+                            }
                         </div>
                     ))}
                 </div>
                 <div className={st.boxChat}>
-                    <div className={`${st.chatContent}`}>
-                        <div className={st.chatHeader}>
-                            <p>Fillfin Admin</p>
-                        </div>
-                        <div className={st.chatBody} ref={chatBody}>
-                            {fakeConversation?.map((data, index) => (
-                                <div key={data.id}>
-                                    {!data.is_admin
-                                        ? <div className={st.memberChat}>
-                                            <img className={st.iconMember} src="/assets/contact.jpg" alt="image-contactUs" />
-                                            <p>{data.message}</p>
-                                        </div>
-                                        : <div className={st.adminChat}>
-                                            <img className={st.iconAdmin} src="/assets/product.png" alt="image-contactUs" />
-                                            <p>{data.message}</p>
-                                        </div>
-                                    }
-                                </div>
-                            ))}
-                        </div>
-                        <div className={st.chatFooter}>
-                            {/* <span className={st.iconPlus}>
+                    {selectUser &&
+                        <div className={`${st.chatContent}`}>
+                            <div className={st.chatHeader}>
+                                <p>Fillfin Admin</p>
+                            </div>
+                            <div className={st.chatBody} ref={chatBody}>
+                                {conversation?.map((data, index) => (
+                                    <div key={index}>
+                                        {selectUser &&
+                                            <>
+                                                {data.role == "admin"
+                                                    ? <div className={st.memberChat}>
+                                                        <img className={st.iconMember} src="/assets/contact.jpg" alt="image-contactUs" />
+                                                        <p>{data.message}</p>
+                                                    </div>
+                                                    : <div className={st.adminChat}>
+                                                        <img className={st.iconAdmin} src="/assets/product.png" alt="image-contactUs" />
+                                                        <p>{data.message}</p>
+                                                    </div>
+                                                }
+                                            </>
+                                        }
+                                    </div>
+                                ))}
+                            </div>
+                            <div className={st.chatFooter}>
+                                {/* <span className={st.iconPlus}>
                                 <i className="fa-solid fa-circle-plus"></i>
                             </span> */}
-                            <input
-                                value={message}
-                                type="text"
-                                onChange={(e) => setMessage(e.target.value)}
-                                onKeyDown={(e) => something(e)}
-                            />
-                            <span className={st.iconSend}>
-                                <i className="fa-solid fa-paper-plane" onClick={onSendMessageClick}></i>
-                            </span>
+                                <input
+                                    value={message}
+                                    type="text"
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    onKeyDown={(e) => something(e)}
+                                />
+                                <span className={st.iconSend}>
+                                    <i className="fa-solid fa-paper-plane" onClick={onSendMessageClick}></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

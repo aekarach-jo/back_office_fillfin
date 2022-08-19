@@ -50,29 +50,50 @@
       }
     }
 
-    .contentProduct {
-      @apply flex justify-center gap-5 py-10 flex-wrap bg-emerald-200/20;
+    .contentBottom {
+      @apply flex flex-wrap flex-row gap-10 justify-center bg-emerald-200/20;
 
-      .product {
-        @apply rounded-lg shadow-lg bg-white max-w-xs relative;
-
+      .contentPayment {
+        @apply flex flex-col gap-3 p-3 place-items-center my-auto ; 
+        
+        p{
+          font-size: 20px;
+          font-weight: 400;
+          
+        }
         img {
-          @apply mx-auto rounded-t-lg;
+          @apply sm:min-w-full rounded;
+          width: 80%;
+          height: 100%;
         }
 
-        .producrDetail {
-          @apply p-6;
 
-          .pd_name {
-            @apply text-gray-900 text-xl font-medium mb-2;
+
+      }
+
+      .contentProduct {
+        @apply flex justify-center gap-5 py-10 flex-wrap;
+
+        .product {
+          @apply rounded-lg shadow-lg bg-white max-w-xs relative pt-4;
+
+          img {
+            @apply mx-auto rounded-t-lg;
           }
-          .pd_content {
-            @apply text-gray-700 text-base mb-4;
+
+          .producrDetail {
+            @apply p-6;
+
+            .pd_name {
+              @apply text-gray-900 text-xl font-medium mb-2;
+            }
+            .pd_content {
+              @apply text-gray-700 text-base mb-4;
+            }
+            .pd_status {
+              @apply inline-block px-6 py-1.5 text-white font-medium text-xs leading-tight uppercase shadow-md;
+            }
           }
-          .pd_status {
-            @apply inline-block px-6 py-1.5 text-white font-medium text-xs leading-tight uppercase shadow-md;
-         
-        }
         }
       }
     }

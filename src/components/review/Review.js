@@ -70,31 +70,37 @@ export default function Review() {
         return <span>{dateTime}</span>
     }
 
-
-    function apiDeleteReview(data) {
+    function handleDelectReview(data) {
         console.log(data);
         Swal.fire({
             title: 'ยืนยันการลบรีวิว',
             text: data.message,
-            html: `<textarea placeholder="หมายเหตุ" class="border-2" type="text" style="padding: 0.7rem ;border-radius: 10px ; width: 90%" id="message"/>`,
             showCancelButton: true,
             confirmButtonText: 'ลบ',
             cancelButtonText: 'ยกเลิก',
             confirmButtonColor: "#ff0303",
             showLoaderOnConfirm: true,
             allowOutsideClick: false,
-            preConfirm: () => {
-                if (document.getElementById("message").value.trim() == "") {
-                    return false;
-                }
-                return document.getElementById("message").value.trim()
-            }
         }).then((result) => {
             if (result.isConfirmed) {
-
-            } else {
-                return false;
+                apiDeleteReview(data.id)
             }
+        })
+    }
+
+    async function apiDeleteReview(id){
+        await axios({
+            method: 'GET',
+            url: `${apiUrl}/api/admin/review/delete/${id}`,
+            headers: {
+                Authorization: `Bearer ${access_token}`
+            },
+        }).then(() => {
+            Toast.fire({
+                icon: 'success',
+                title: 'ลบแล้ว'
+            })
+            apiGetReview()
         })
     }
 
@@ -143,7 +149,7 @@ export default function Review() {
                                 </td>
                                 <td className="py-2 px-6">
                                     <div className="flex flex-row justify-center ">
-                                        <button onClick={() => apiDeleteReview(data)} type="button" className="text-white bg-[#ff0303] hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                        <button onClick={() => handleDelectReview(data)} type="button" className="text-white bg-[#ff0303] hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-1.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                                             <i className="fa-solid fa-trash-can"></i>  ลบ</button>
                                     </div>
                                 </td>

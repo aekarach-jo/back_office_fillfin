@@ -7,7 +7,7 @@ import st from '../../styles/allUse/content.module.scss';
 function Account() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
     const access_token = useSelector((state) => (state.app.access_token))
-    const [memberList, setMemberList] = useState()
+    const [memberList, setMemberList] = useState([])
     const [searchText, setSearchText] = useState("")
 
 
@@ -39,7 +39,7 @@ function Account() {
                 <i className="fa-solid fa-magnifying-glass"></i>
             </div>
             <div className={st.contentTable}>
-                {memberList !== undefined && memberList.length > 0 &&
+                {memberList.length > 0 &&
                     <Table data={memberList} rowsPerPage={12} searchText={searchText} />
                 }
             </div>

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialAppState = {
     apiPath: 'http://192.168.1.54:8000',
+    socketPath: 'http://192.168.1.54:5000',
     isLogin: false,
     access_token: null,
     refresh_token: null

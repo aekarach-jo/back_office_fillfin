@@ -4,13 +4,7 @@ import moment from "moment";
 import st from "../../../../styles/allUse/table.module.scss";
 import TableFooter from "../../../sub_component/TableFooter";
 import { useSelector } from "react-redux";
-import {
-  Collapse,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { Collapse, List } from "@mui/material";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -35,15 +29,10 @@ const Table = ({ data, rowsPerPage, searchText, apiGetPackage }) => {
 
   useEffect(() => {}, [select]);
 
-  function FormatDate({ dateTime }) {
-    dateTime = moment(dateTime).format("DD MMM YYYY");
-    return <span>{dateTime}</span>;
-  }
-
   function handleSelect(data) {
     setSelect(data);
     setPackageEdit({
-      packageId: data.package_id,
+      packageId: data.pack_id,
       content: data.content,
       day: data.day,
       grossProfit: data.grossProfit,
@@ -84,14 +73,6 @@ const Table = ({ data, rowsPerPage, searchText, apiGetPackage }) => {
           title: "แก้ไขแล้ว",
         });
         apiGetPackage();
-        setPackageEdit({
-          packageId: "",
-          content: "",
-          day: "",
-          grossProfit: "",
-          price: "",
-          name: "",
-        });
       });
     } catch (err) {
       console.log(err);
@@ -123,7 +104,7 @@ const Table = ({ data, rowsPerPage, searchText, apiGetPackage }) => {
   return (
     <>
       {packageEdit != {} && (
-        <Collapse in={open} timeout="auto" >
+        <Collapse in={open} timeout="auto">
           <List
             component="div"
             disablePadding
@@ -244,17 +225,17 @@ const Table = ({ data, rowsPerPage, searchText, apiGetPackage }) => {
                         })
                       }
                     />
+            <button
+              type="button"
+              className="m-auto gap-2 flex text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-4 focus:ring-pink-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-pink-900"
+              onClick={() => (handleEdit(), setOpen(!open))}
+            >
+              <i className="my-auto fa-solid fa-pen-to-square"></i>
+              แก้ไข
+            </button>
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  className="m-auto gap-2 flex text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-4 focus:ring-pink-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-pink-900"
-                  onClick={() => (handleEdit(), setOpen(!open))}
-                >
-                  <i className="my-auto fa-solid fa-pen-to-square"></i>
-                  แก้ไข
-                </button>
               </div>
             </div>
             {/* <ListItem button>
@@ -295,12 +276,12 @@ const Table = ({ data, rowsPerPage, searchText, apiGetPackage }) => {
               >
                 <td>
                   <img
-                    className="mx-auto "
+                    className="mx-auto"
                     width={30}
                     height={30}
                     src={`${apiUrl}${data.image}`}
                     alt="imagePackage"
-                  />
+                  />{" "}
                 </td>
                 <td>{data.name}</td>
                 <td>{data.gender}</td>
@@ -308,17 +289,14 @@ const Table = ({ data, rowsPerPage, searchText, apiGetPackage }) => {
                 <td>{data.grossProfit}</td>
                 <td>
                   <div className={st.wrapBtn}>
-                    {/* <Link to={`/order/detail?orderNumber=${data.orderNumber}`}> */}
                     <button
                       type="button"
                       onClick={() => (setOpen(true), handleSelect(data))}
                       className="m-auto gap-2 flex text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-yellow-900"
                     >
-                      <i className="my-auto fa-solid fa-pen-to-square"></i>
-                      แก้ไข
+                      <i className="fa-solid fa-screwdriver-wrench"></i>
+                      ตั้งค่า
                     </button>
-
-                    {/* </Link> */}
                   </div>
                 </td>
               </tr>

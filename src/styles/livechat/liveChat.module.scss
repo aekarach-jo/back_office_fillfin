@@ -21,12 +21,12 @@ $desktop: "only screen and (min-width : 1025px)";
     @apply text-2xl font-semibold;
   }
   .inContent {
-    @apply flex flex-row overflow-x-auto mt-5 border-2 border-pink-700 rounded-lg mx-auto;
+    @apply flex flex-row overflow-x-auto mt-5 border-2 border-pink-200 rounded-lg mx-auto;
     max-width: 1100px;
     height: 800px;
 
     .displayScroller {
-      @apply px-4 m-4 flex flex-col gap-2 overflow-y-scroll;
+      @apply items-center px-4 m-4 flex flex-col gap-2 overflow-y-scroll;
       width: 30%;
       &::-webkit-scrollbar {
         width: 10px;
