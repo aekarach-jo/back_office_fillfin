@@ -36,6 +36,8 @@ export default function OrderDetail() {
     const [orderNumber, setOrderNumber] = useState(query.get('orderNumber'))
     const [orderDetail, setOrderDetail] = useState()
     const [productList, setProductList] = useState([])
+    const [productRec, setProductRec] = useState([])
+    const [productPre, setProductPre] = useState([])
     const [selectStatus, setSelectStatus] = useState()
     const [selectStatusOrder, setSelectStatusOrder] = useState()
     const [statusPaymentList, setStatusPaymentList] = useState(formStatusPayment)
@@ -55,8 +57,13 @@ export default function OrderDetail() {
             if (res.data.status) {
                 for (let order of res.data.order) {
                     if (orderNumber == order.orderNumber) {
+                        const filterRec = order.product.filter(p => p.recommend == 'yes' && p.preOrder != 'yes')
+                        const filterPre = order.product.filter(p => p.preOrder == 'yes' && p.recommend != 'yes')
+                        const filterProduct = order.product.filter(p => p.preOrder == 'no' && p.recommend == 'no')
                         setOrderDetail(order)
-                        setProductList(order.product)
+                        setProductRec(filterRec)
+                        setProductPre(filterPre)
+                        setProductList(filterProduct)
                         setSelectStatus({ paymentStatus: order.paymentStatus })
                         setSelectStatusOrder({ status: order.status })
                         if (!order.isRead) {
@@ -64,7 +71,6 @@ export default function OrderDetail() {
                         }
                     }
                 }
-                console.log(orderDetail);
             }
         })
     }
@@ -150,7 +156,6 @@ export default function OrderDetail() {
     }
 
     async function handleChangepaymentStatus(paymentStatus) {
-        console.log(paymentStatus);
         await axios({
             method: 'POST',
             url: `${apiUrl}/api/admin/orders/updatePaymentStatus`,
@@ -241,6 +246,7 @@ export default function OrderDetail() {
                             <th scope="col"> เลขที่ออเดอร์</th>
                             <th scope="col"> ชื่อผู้สั่ง  </th>
                             <th scope="col"> วันที่ซื้อ  </th>
+                            <th scope="col"> ราคารวม  </th>
                             <th scope="col"> สลิป </th>
                             <th scope="col"> สถานะการชำระเงิน </th>
                             <th scope="col"> สถานะออเดอร์ </th>
@@ -253,6 +259,7 @@ export default function OrderDetail() {
                                 <td>{orderDetail.orderNumber}</td>
                                 <td>{orderDetail.name}</td>
                                 <td> <FormatDate dateTime={orderDetail.createdAt} /></td>
+                                <td>{orderDetail.totalPrice}</td>
                                 <td> <img className='cursor-pointer text-center' onClick={() => handleShowSlip(orderDetail.slip)} width={35} height={35} src={`${apiUrl}${orderDetail.slip}`} alt="slip" /></td>
                                 <td>
                                     <Listbox value={selectStatus} onChange={setSelectStatus}>
@@ -263,9 +270,12 @@ export default function OrderDetail() {
                                                  ${selectStatus.paymentStatus == 'confirm' && 'bg-green-500/50'}
                                                  ${selectStatus.paymentStatus == 'failed' && 'bg-red-500 text-rose-100'}
                                                 `}>
-                                                    <span className="block truncate text-left">{selectStatus.paymentStatus}</span>
+                                                    <span className="block truncate text-left text-white ">
+                                                        {selectStatus.paymentStatus === "pending" && 'รอการยืนยัน'}
+                                                        {selectStatus.paymentStatus === "confirm" && 'ยืนยันแล้ว'}
+                                                        {selectStatus.paymentStatus === "failed" && 'ผิดพลาด'}                                                        </span>
                                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                                        <i className="animate-bounce fa-solid fa-arrow-down"></i>
+                                                        <i className="text-white animate-bounce fa-solid fa-arrow-down"></i>
                                                     </span>
                                                 </Listbox.Button>
                                                 <Transition
@@ -287,12 +297,13 @@ export default function OrderDetail() {
                                                                 {({ selected }) => (
                                                                     <>
                                                                         <span
-                                                                            className={`block truncate align-left ${selected ? 'font-medium' : 'font-normal'
+                                                                            className={`block text-xs truncate align-left ${selected ? 'font-medium' : 'font-normal'
                                                                                 }`}
                                                                             onClick={() => handleChangepaymentStatus(data.paymentStatus)}
                                                                         >
-                                                                            {data.paymentStatus}
-                                                                        </span>
+                                                                            {data.paymentStatus === "pending" && 'รอการยืนยัน'}
+                                                                            {data.paymentStatus === "confirm" && 'ยืนยันแล้ว'}
+                                                                            {data.paymentStatus === "failed" && 'ผิดพลาด'}                                                                        </span>
                                                                         {selected ? (
                                                                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-600">
                                                                                 <i className="text-pink-500 fa-solid fa-check"></i>
@@ -317,9 +328,14 @@ export default function OrderDetail() {
                                                  ${selectStatusOrder.status === 'success' && 'bg-green-500/50'}
                                                  ${selectStatusOrder.status === 'failed' && 'bg-red-500 text-rose-100'}
                                                 `}>
-                                                    <span className="block truncate text-left">{selectStatusOrder.status}</span>
+                                                    <span className="block truncate text-left text-white ">
+                                                        {selectStatusOrder.status === "pending" && 'กำลังเตรียมสินค้า'}
+                                                        {selectStatusOrder.status === "shipping" && 'กำลังส่ง'}
+                                                        {selectStatusOrder.status === "success" && 'ส่งแล้ว'}
+                                                        {selectStatusOrder.status === "failed" && 'ผิดลาด'}
+                                                    </span>
                                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                                        <i className="animate-bounce fa-solid fa-arrow-down"></i>
+                                                        <i className="text-white animate-bounce fa-solid fa-arrow-down"></i>
                                                     </span>
                                                 </Listbox.Button>
                                                 <Transition
@@ -341,11 +357,14 @@ export default function OrderDetail() {
                                                                 {({ selected }) => (
                                                                     <>
                                                                         <span
-                                                                            className={`block truncate align-left ${selected ? 'font-medium' : 'font-normal'
+                                                                            className={`text-xs block truncate align-left ${selected ? 'font-medium' : 'font-normal'
                                                                                 }`}
                                                                             onClick={() => handleChangeOrderStatus(data.status)}
                                                                         >
-                                                                            {data.status}
+                                                                            {data.status === "pending" && 'กำลังเตรียมสินค้า'}
+                                                                            {data.status === "shipping" && 'กำลังส่ง'}
+                                                                            {data.status === "success" && 'ส่งแล้ว'}
+                                                                            {data.status === "failed" && 'ผิดพลาด'}
                                                                         </span>
                                                                         {selected ? (
                                                                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-600">
@@ -374,19 +393,18 @@ export default function OrderDetail() {
                     </tbody>
                 </table>
                 <div className={st.contentBottom}>
-                    {/* {orderDetail &&
-                            <p>รายละเอียดการชำระเงิน</p>
-                        <div className={st.contentPayment}>
-                            <img src={`${apiUrl}${orderDetail.slip}`} alt="slip" />
-                        </div>
-                    } */}
-                    <div className={st.contentProduct}>
-                        {productList.length > 0 &&
+                    {productList.length > 0 &&
+                        <div className={st.contentProduct}>
+                            <p className={st.title}>สินค้าทั่วไป</p>
                             <>
                                 {productList?.map((data, index) => (
                                     <div key={index}>
                                         <div className={st.product}>
-                                            <img src={`${apiUrl}${data.product_image}`} alt="productImage" />
+                                            <img src={`${apiUrl}${data.product_image}`} alt="productImage"
+                                                onError={e => {
+                                                    e.target.setAttribute('src', '/assets/empty.png');
+                                                    return false;
+                                                }} />
                                             <div className={st.productDetail}>
                                                 <p className={`font-bold ${st.pd_name}`}>{data.product_name}</p>
                                                 <p className={st.pd_content}>{data.product_content} </p>
@@ -396,6 +414,10 @@ export default function OrderDetail() {
                                             ${data.product_status == 'success' && 'bg-green-600   hover:shadow-lg  absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}
                                             ${data.product_status == 'shipping' && 'bg-orange-600   hover:shadow-lg absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}                                             `}
                                                 >{data.product_status}</p>
+                                                <div className='absolute bg-white w-20 h-8 top-3 right-2 flex flex-row items-center justify-center gap-2 rounded-bl-lg'>
+                                                    <p className={`text-xl font-bold`}>{data.price}</p>
+                                                    <i className="text-red-500 fa-solid fa-tags"></i>
+                                                </div>
                                             </div>
                                             <div className='w-full rounded-b-lg bg-gray-300'>
                                                 <CustomizedSteppers product={data} handleChangeStatus={handleChangeStatus} />
@@ -404,8 +426,79 @@ export default function OrderDetail() {
                                     </div>
                                 ))}
                             </>
-                        }
-                    </div>
+                        </div>
+                    }
+                    {productPre.length > 0 &&
+                        <div className={st.contentProduct}>
+                            <p className={st.title}>สินค้าพรีออเดอร์</p>
+                            <>
+                                {productPre?.map((data, index) => (
+                                    <div key={index}>
+                                        <div className={st.product}>
+                                            <img src={`${apiUrl}${data.product_image}`} alt="productImage"
+                                                onError={e => {
+                                                    e.target.setAttribute('src', '/assets/empty.png');
+                                                    return false;
+                                                }} />
+                                            <div className={st.productDetail}>
+                                                <p className={`font-bold ${st.pd_name}`}>{data.product_name}</p>
+                                                <p className={st.pd_content}>{data.product_content} </p>
+                                                <p className={` ${st.pd_status}
+                                            ${data.product_status == 'pending' && 'bg-yellow-600  hover:shadow-lg absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}
+                                            ${data.product_status == 'accepted' && 'bg-green-600   hover:shadow-lg  absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}
+                                            ${data.product_status == 'success' && 'bg-green-600   hover:shadow-lg  absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}
+                                            ${data.product_status == 'shipping' && 'bg-orange-600   hover:shadow-lg absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}                                             `}
+                                                >{data.product_status}</p>
+                                                <div className='absolute bg-white w-20 h-8 top-3 right-2 flex flex-row items-center justify-center gap-2 rounded-bl-lg'>
+                                                    <p className={`text-xl font-bold`}>{data.price}</p>
+                                                    <i className="text-red-500  fa-solid fa-tags"></i>
+                                                </div>
+                                            </div>
+                                            <div className='w-full rounded-b-lg bg-gray-300'>
+                                                <CustomizedSteppers product={data} handleChangeStatus={handleChangeStatus} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </>
+                        </div>
+                    }
+                    {productRec.length > 0 &&
+                        <div className={st.contentProduct}>
+                            <p className={st.title}>สินค้าแนะนำ</p>
+                            <>
+                                {productRec?.map((data, index) => (
+                                    <div key={index}>
+                                        <div className={st.product}>
+                                            <img src={`${apiUrl}${data.product_image}`} alt="productImage"
+                                                onError={e => {
+                                                    e.target.setAttribute('src', '/assets/empty.png');
+                                                    return false;
+                                                }}
+                                            />
+                                            <div className={st.productDetail}>
+                                                <p className={`font-bold ${st.pd_name}`}>{data.product_name}</p>
+                                                <p className={st.pd_content}>{data.product_content} </p>
+                                                <p className={` ${st.pd_status}
+                                            ${data.product_status == 'pending' && 'bg-yellow-600  hover:shadow-lg absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}
+                                            ${data.product_status == 'accepted' && 'bg-green-600   hover:shadow-lg  absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}
+                                            ${data.product_status == 'success' && 'bg-green-600   hover:shadow-lg  absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}
+                                            ${data.product_status == 'shipping' && 'bg-orange-600   hover:shadow-lg absolute rotate-[-45deg] text-lg left-[-24px] top-3 text-white  px-5 transition duration-150  ease-in-out'}                                             `}
+                                                >{data.product_status}</p>
+                                                <div className='absolute bg-white w-20 h-8 top-3 right-2 flex flex-row items-center justify-center gap-2 rounded-bl-lg'>
+                                                    <p className={`text-xl font-bold`}>{data.price}</p>
+                                                    <i className="text-red-500 fa-solid fa-tags"></i>
+                                                </div>
+                                            </div>
+                                            <div className='w-full rounded-b-lg bg-gray-300'>
+                                                <CustomizedSteppers product={data} handleChangeStatus={handleChangeStatus} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </>
+                        </div>
+                    }
                 </div>
             </div>
         </div >

@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialAppState = {
     apiPath: 'http://192.168.1.54:8000',
     socketPath: 'http://192.168.1.54:5000',
-    isLogin: false,
-    access_token: null,
-    refresh_token: null
+    isLogin: !!localStorage.getItem('accessToken'),
+    refresh_token: (localStorage.getItem('refreshToken')?localStorage.getItem('refreshToken'):null),
+    access_token: (localStorage.getItem('accessToken')?localStorage.getItem('accessToken'):null),
 }
 
 const appSlice = createSlice({
@@ -23,7 +23,7 @@ const appSlice = createSlice({
             state.refresh_token = ''
             localStorage.clear()
         },
-        checkToken(state, action) {
+        checkToken(state, action) { 
             state.isLogin = true
             state.access_token = localStorage.getItem('accessToken')
             state.refresh_token = localStorage.getItem('refreshToken')

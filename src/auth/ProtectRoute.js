@@ -1,62 +1,63 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
 import { appAction } from '../store/app-slice'
 import jwt_decode from "jwt-decode";
 import moment from 'moment';
 import axios from 'axios';
+import { useState } from 'react';
 
-function useAuth() {
-    const dispatch = useDispatch()
-    dispatch(appAction.checkToken())
-    const apiUrl = useSelector((state) => (state.app.apiPath))
-    const refresh_token = useSelector((state) => (state.app.refresh_token))
-    const access_token = useSelector((state) => (state.app.access_token))
-    setInterval(() => {
-        const accessToken = localStorage.getItem('accessToken')
-        const acc = jwt_decode(accessToken)
-        const runTimePerSecond = (acc.exp - moment(Math.floor(Date.now() / 1000)));
-        // console.log(runTimePerSecond);
-        if (runTimePerSecond < 30) {
-            console.log('time out');
-            RefreshToken(apiUrl, refresh_token)
-            setTimeout(() =>{dispatch(appAction.checkToken()) },2000)  
-            return true;
-        }
-    }, 5000)
-
-    if (access_token) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-async function RefreshToken(apiUrl, refresh_token) {
+const RefreshToken = async(apiUrl, refresh_token) => {
+    let token;
     try {
         await axios({
             method: 'POST',
             url: `${apiUrl}/api/admin/getToken`,
             headers: { 'Content-Type': 'application/json' },
-            data: JSON.stringify({
-                token: refresh_token
-            })
+            data: JSON.stringify({ token: refresh_token })
         }).then(res => {
-            console.log(res);
             localStorage.setItem('accessToken', res.data.token)
+            token = res.data.token;
         })
     }
     catch (err) {
-        console.log(err);
-        localStorage.setItem('accessToken', "")
-        window.location.reload()
-        return false;
+        token = false
     }
+    return token;
 }
 
 const ProtectRoute = (props) => {
-    const auth = useAuth()
-    return auth ? <Outlet to='/' /> : <Navigate to='/login' />
+    const dispatch = useDispatch()
+    const apiUrl = useSelector((state) => (state.app.apiPath))
+    const isLogin = useSelector((state) => (state.app.isLogin))
+    const refresh_token = useSelector((state) => (state.app.refresh_token))
+    const [isFetching , setIsFetching] = useState(false)
+
+    useEffect( ()=> {
+        if(refresh_token) {
+            if(!isFetching){
+                const checkAccess = setInterval( async () => {
+                    const accessToken = localStorage.getItem('accessToken')
+                    const acc = jwt_decode(accessToken)
+                    const expiredTime = (acc.exp - moment(Math.floor(Date.now() / 1000)));
+                    if (expiredTime < 30 && !isFetching) {
+                        clearInterval(checkAccess)
+                        const token = await RefreshToken(apiUrl, refresh_token) 
+                        if(token) {
+                            setIsFetching(true)
+                        } else {
+                            dispatch(appAction.logout())
+                        }
+                    }
+                }, 1000)
+            }
+            if(isFetching) {
+                dispatch(appAction.checkToken())
+                setIsFetching(false)
+            }
+        }
+    },[isFetching, isLogin])
+    return isLogin ? <Outlet to='/' /> : <Navigate to='/login' />
 }
 
 export default ProtectRoute;

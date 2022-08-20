@@ -68,7 +68,7 @@ export default function StoreGender({ gender }) {
     }
     return (
         <div className="h-screen flex-1 p-4   max-h-screen overflow-auto  animate-[fade_.3s_ease-in-out]">
-            <div className='flex p-6 max-w-[1000px] mx-auto animate-[slide_.3s_ease-in-out]'>
+            <div className='flex p-6  mx-auto animate-[slide_.3s_ease-in-out]'>
                 <div className='mx-auto flex gap-5 flex-wrap justify-start '>
                     {storeList?.map((data, index) => (
                         <div key={index} >
@@ -82,9 +82,8 @@ export default function StoreGender({ gender }) {
                                         : <span className="flex h-3 w-3 absolute top-1 right-2">
                                             <span className="absolute animate-ping  inline-flex h-4 w-4 rounded-full bg-red-400 opacity-75" />
                                             <span className="absolute inline-flex rounded-full h-4 w-4 bg-red-500" />
-                                        </span>}
-
-
+                                        </span>
+                                    }
                                     <div className="flex flex-col items-center p-2">
                                         <img className="mb-3 w-24 h-24 rounded-full shadow-lg" src={`${apiUrl}${data.profile_img}`} alt="profile" />
                                         <p className="text-sm font-bold text-gray-900 dark:text-white">{data.name}</p>

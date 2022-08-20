@@ -55,7 +55,6 @@ export default function StoreDetail() {
         }
     }
 
-
     async function apiGetStore() {
         await axios({
             methid: 'GET',
@@ -144,7 +143,6 @@ export default function StoreDetail() {
         dateTime = moment(dateTime).format("DD MMM YYYY");
         return <span>{dateTime}</span>
     }
-
 
     function onSetOpen() {
         setIsOpen(!isOpen)

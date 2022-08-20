@@ -31,7 +31,7 @@ export default function ReportDetail({ select }) {
         apiGetReport()
     }, [reset])
 
-    function resetHandler(){
+    function resetHandler() {
         setReset(true)
         setDate([
             {
@@ -104,12 +104,33 @@ export default function ReportDetail({ select }) {
                         </button>
                     }
                 </div>
-                <input
-                    type="text"
-                    onChange={e => setSearchText(e.target.value)}
-                    className='border-2 rounded flex px-3'
-                    placeholder="ค้นหา"
-                    style={{ margin: "0 0 0 auto" }} />
+                {select === 'customerReport' &&
+                    <input
+                        type="text"
+                        onChange={e => setSearchText(e.target.value)}
+                        className='border-2 rounded flex px-3'
+                        placeholder='ค้นหาชื่อผู้ใช้งาน'
+                        style={{ margin: "0 0 0 auto" }}
+                    />
+                }
+                {select === 'storeReport' &&
+                    <input
+                        type="text"
+                        onChange={e => setSearchText(e.target.value)}
+                        className='border-2 rounded flex px-3'
+                        placeholder='ค้นหาชื่อร้านค้า'
+                        style={{ margin: "0 0 0 auto" }}
+                    />
+                }
+                {select === 'orderReport' &&
+                    <input
+                        type="text"
+                        onChange={e => setSearchText(e.target.value)}
+                        className='border-2 rounded flex px-3'
+                        placeholder='ค้นหาเลขออเดอร์'
+                        style={{ margin: "0 0 0 auto" }}
+                    />
+                }
                 <i className="absolute right-3 text-gray-500/25 top-1.5 fa-solid fa-magnifying-glass"></i>
             </div>
             {
@@ -127,13 +148,13 @@ export default function ReportDetail({ select }) {
 
 
             <div className="overflow-x-auto relative  max-w-[1100px] mx-auto border-2 rounded-lg">
-                {select == 'customerReport' && dataReport.length > 0 &&
+                {select == 'customerReport' &&
                     <ReportMember data={dataReport} rowsPerPage={14} searchText={searchText} />
                 }
-                {select == 'storeReport' && dataReport.length > 0 &&
+                {select == 'storeReport' &&
                     <ReportStore data={dataReport} rowsPerPage={10} searchText={searchText} />
                 }
-                {select == 'orderReport' && dataReport.length > 0 &&
+                {select == 'orderReport' &&
                     <ReportOrsers data={dataReport} rowsPerPage={10} searchText={searchText} />
                 }
             </div>

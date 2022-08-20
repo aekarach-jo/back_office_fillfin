@@ -1,0 +1,86 @@
+.content {
+  width: 100%;
+  height: 27rem;
+  background: linear-gradient(180deg, #c93a87 0%, rgba(0, 0, 0, 0) 100%);
+
+  .contentBody {
+    @apply h-screen flex-1 p-4 gap-2 max-h-screen overflow-auto;
+
+    .title {
+      @apply text-xl font-semibold m-6 text-left text-white;
+    }
+
+    .flexCol {
+      @apply flex flex-col gap-10 mx-auto;
+      width: 90%;
+
+      .flexRow {
+        @apply flex flex-row mx-auto gap-2 flex-wrap justify-center;
+
+        .box {
+          @apply sm:min-w-[8rem] min-w-[18rem] rounded bg-slate-200 hover:shadow-lg duration-100;
+          height: 150px;
+
+          .boxBg {
+            @apply flex justify-between items-center px-4 w-full rounded-t;
+            height: 70%;
+          }
+
+          .boxFooter {
+            @apply flex justify-between items-center px-4  w-full rounded-b;
+            height: 30%;
+          }
+        }
+      }
+
+      .flexRowChart {
+        @apply flex flex-row mx-auto gap-2 flex-wrap w-full drop-shadow-md;
+
+        .barChart {
+          @apply mx-auto p-2 flex justify-center items-center sm:w-full  rounded bg-white drop-shadow-md;
+          width: 60%;
+
+          .chart {
+            @apply w-full h-full bg-white rounded-sm;
+
+            .titleChart {
+                @apply  text-lg;
+              }
+          }
+        }
+        .polarChart {
+          @apply mx-auto flex justify-center items-center sm:w-full w-[30%]  rounded bg-white drop-shadow-md;
+          .chart {
+            @apply w-full h-full bg-white rounded-sm p-2;
+            
+            canvas{
+                width: 100% !important;
+                height: 100% !important;
+            }
+            .overFlow {
+              overflow-y: auto;
+              width: 100%;
+              height: 20rem;
+
+              &::-webkit-scrollbar {
+                width: 10px;
+              }
+
+              &::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 6px rgb(196 196 196 / 30%);
+              }
+
+              &::-webkit-scrollbar-thumb {
+                background: linear-gradient(180deg, #ff95b5 0%, #c93a87 100%);
+                border-radius: 5px;
+              }
+            }
+            .titleChart {
+              @apply  text-lg;
+            }
+          }
+        }
+      }
+    }
+  }
+}

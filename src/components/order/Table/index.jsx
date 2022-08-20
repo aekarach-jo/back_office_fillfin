@@ -58,14 +58,15 @@ const Table = ({ data, rowsPerPage, searchText }) => {
                   <FormatDate dateTime={data.createdAt} />
                 </td>
                 <td className={`${!data.isRead && 'font-bold'}`}>
-                  <p
-                    className={`
-                    ${data.paymentStatus == "pending" && "text-yellow-500"}
-                    ${data.paymentStatus == "confirm" && "text-green-600"}
-                    ${data.paymentStatus == "failed" && "text-red-500"}
+                  <p className={`
+                    ${data.paymentStatus === "pending" && "text-yellow-500"}
+                    ${data.paymentStatus === "confirm" && "text-green-600"}
+                    ${data.paymentStatus === "failed" && "text-red-500"}
                        text-md font-semibold`}
                   >
-                    {data.paymentStatus}
+                    {data.paymentStatus === "pending" && 'รอการยืนยัน'}
+                    {data.paymentStatus === "confirm" && 'ยืนยันแล้ว'}
+                    {data.paymentStatus === "failed" && 'ผิดพลาด'}
                   </p>
                 </td>
                 <td>
@@ -77,7 +78,10 @@ const Table = ({ data, rowsPerPage, searchText }) => {
                     ${data.status === "failed" && "text-red-500"}
                        text-md font-semibold`}
                   >
-                    {data.status}
+                    {data.status === "pending" && 'กำลังเตรียมสินค้า'}
+                    {data.status === "shipping" && 'กำลังส่ง'}
+                    {data.status === "success" && 'ส่งแล้ว'}
+                    {data.status === "failed" && 'รับของแล้ว'}
                   </p>
                 </td>
                 <td>

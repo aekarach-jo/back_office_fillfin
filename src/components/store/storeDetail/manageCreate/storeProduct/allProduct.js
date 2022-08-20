@@ -20,10 +20,15 @@ export default function AllProduct({ productList, apiGetStore }) {
     const apiUrl = useSelector((state) => (state.app.apiPath))
     const [isDelete, setIsDelete] = useState(false)
     const [select, setSelect] = useState()
-    const [priorityNumber, setPriorityNumber] = useState()
-    const [onChoose, setOnChoose] = useState()
+    const [priorityNumber, setPriorityNumber] = useState([])
+    // const [onChoose, setOnChoose] = useState()
+    console.log(priorityNumber)
     useEffect(() => {
-    }, [])
+        setPriorityNumber([])
+        productList?.map((data) => {
+            setPriorityNumber(prev => [...prev, parseInt(data.priority)])
+        })
+    }, [productList])
 
     function handleConfirmDelete(product_code) {
         Swal.fire({
@@ -59,6 +64,7 @@ export default function AllProduct({ productList, apiGetStore }) {
             })
         })
     }
+
     async function setPriority(productCode) {
         await axios({
             method: 'POST',
@@ -74,8 +80,10 @@ export default function AllProduct({ productList, apiGetStore }) {
             Toast.fire({
                 icon: 'success',
                 title: 'สำเร็จ'
-            }).then(() => {
-                apiGetStore()
+            }).then(async () => {
+                const data = await apiGetStore()
+                console.log(data)
+                // setProducts(data)
             })
         })
     }
@@ -144,26 +152,6 @@ export default function AllProduct({ productList, apiGetStore }) {
                                 <div className={st.product_name}>
                                     <p>{data.name}</p>
                                 </div>
-                                <div className="flex space-x-3 absolute right-7">
-                                    <div className='flex flex-col justify-between py-2 h-20 w-5 scale-90'>
-                                        {priorityNumber <= data.priority && onChoose == index &&
-                                            <i className="text-lg font-bold opacity-70 text-gray-700 hover:opacity-100 hover:shadow-md fa-solid fa-arrow-up duration-200 cursor-pointer"
-                                                onClick={() => setPriority(data.product_code)}
-                                            ></i>
-                                        }
-                                        <input
-                                            className='w-5 p-1'
-                                            type="text"
-                                            // defaultValue=''
-                                            placeholder={data.priority}
-                                            onChange={(e) => (setPriorityNumber(e.target.value.trim("")), setOnChoose(index))} />
-                                        {priorityNumber >= data.priority && onChoose == index &&
-                                            <i className="text-lg font-bold opacity-70 text-gray-700 hover:opacity-100 hover:shadow-md fa-solid fa-arrow-down duration-200 cursor-pointer"
-                                                onClick={() => setPriority(data.product_code)}
-                                            ></i>
-                                        }
-                                    </div>
-                                </div>
                                 <div className={st.detail_text}>
                                     <p>รายละเอียด : </p>
                                     <p>{data.content_product}</p>
@@ -174,6 +162,24 @@ export default function AllProduct({ productList, apiGetStore }) {
                                 </div>
                                 <div className={st.column_img}>
                                     <ShowImagePost image={data.product_img} />
+                                </div>
+                                <div className="flex mt-4">
+                                    <div className='flex flex-row justify-between items-center gap-4'>
+                                        <label >ลำดับที่</label>
+                                        <input
+                                            className='w-10 p-1 bg-gray-300/50 text-center rounded'
+                                            type="text"
+                                            value={priorityNumber[index] || 0}
+                                            onChange={(e) => setPriorityNumber(prev => prev.map((data, ii) => {
+                                                if(ii === index){
+                                                    return e.target.value
+                                                } else {
+                                                    return data
+                                                }  
+                                            }))}
+                                        />
+                                        <i onClick={() => setPriority(data.product_code)} className="text-xl fa-solid fa-repeat hover:scale-125 duration-200 cursor-pointer"></i>
+                                    </div>
                                 </div>
                             </div>
                         ))}

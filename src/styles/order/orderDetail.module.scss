@@ -51,34 +51,43 @@
     }
 
     .contentBottom {
-      @apply flex flex-wrap flex-row gap-10 justify-center bg-emerald-200/20;
+      @apply flex flex-wrap flex-col gap-2 justify-center;
 
       .contentPayment {
-        @apply flex flex-col gap-3 p-3 place-items-center my-auto ; 
-        
-        p{
+        @apply flex flex-col gap-3 p-3 place-items-center my-auto;
+
+        p {
           font-size: 20px;
           font-weight: 400;
-          
         }
         img {
           @apply sm:min-w-full rounded;
           width: 80%;
           height: 100%;
         }
-
-
-
       }
 
       .contentProduct {
-        @apply flex justify-center gap-5 py-10 flex-wrap;
+        @apply flex flex-wrap justify-center gap-5 border-2 rounded border-gray-200 m-2 p-2;
+        background-color: rgba(0, 0, 0, 0.5);
 
+        .title {
+          position: absolute;
+          left: 1.1rem;
+          font-weight: 600;
+          font-size: 20px;
+          color: black;
+          width: 10rem;
+          background-color: aliceblue;
+        }
         .product {
-          @apply rounded-lg shadow-lg bg-white max-w-xs relative pt-4;
+          @apply rounded-lg shadow-lg bg-white max-w-xs relative pt-4 lg:my-10 md:mt-12 mt-12;
 
           img {
             @apply mx-auto rounded-t-lg;
+            width: 270px;
+            height: 270px;
+            object-fit: cover;
           }
 
           .producrDetail {
@@ -88,7 +97,7 @@
               @apply text-gray-900 text-xl font-medium mb-2;
             }
             .pd_content {
-              @apply text-gray-700 text-base mb-4;
+              @apply text-gray-700 text-base;
             }
             .pd_status {
               @apply inline-block px-6 py-1.5 text-white font-medium text-xs leading-tight uppercase shadow-md;

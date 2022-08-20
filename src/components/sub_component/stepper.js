@@ -163,7 +163,6 @@ const steps = [
   { id: 'accepted', statusProduct: 'รับของแล้ว' }
 ];
 export default function CustomizedSteppers({ product, handleChangeStatus }) {
-  console.log(product);
   const [productStatus, setProductStatus] = useState()
 
   useEffect(() => {
@@ -178,7 +177,6 @@ export default function CustomizedSteppers({ product, handleChangeStatus }) {
       default: return setProductStatus('')
     }
   }
-  console.log(productStatus);
 
   return (
     <>

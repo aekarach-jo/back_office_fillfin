@@ -227,7 +227,7 @@ function LiveChat() {
                                     onKeyDown={(e) => something(e)}
                                 />
                                 <span className={st.iconSend}>
-                                    <i className="fa-solid fa-paper-plane" onClick={onSendMessageClick}></i>
+                                    <i className="fa-solid fa-paper-plane hover:scale-125 duration-200" onClick={onSendMessageClick}></i>
                                 </span>
                             </div>
                         </div>
