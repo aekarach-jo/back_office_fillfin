@@ -67,6 +67,14 @@ export default function Dashboard() {
                             <div className='w-full h-full bg-slate-200 rounded-sm'>2</div>
                         </div>
                     </div>
+                    <div className='flex flex-row mx-auto gap-2 flex-wrap w-full drop-shadow-md'>
+                        <div className="mx-auto p-2 flex justify-center items-center sm:w-full w-[60%] h-[24rem] rounded bg-white drop-shadow-md">
+                            <div className='w-full h-full bg-slate-200 rounded-sm'>1</div>
+                        </div>
+                        <div className="mx-auto p-2 flex justify-center items-center sm:w-full w-[39%] h-[24rem] rounded bg-white drop-shadow-md">
+                            <div className='w-full h-full bg-slate-200 rounded-sm'>2</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
