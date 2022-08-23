@@ -78,7 +78,7 @@ const Table = ({ data, rowsPerPage, searchText }) => {
                     ${data.status === "failed" && "text-red-500"}
                        text-md font-semibold`}
                   >
-                    {data.status === "pending" && 'กำลังเตรียมสินค้า'}
+                    {data.status === "pending" && 'กำลังดำเนินการ'}
                     {data.status === "shipping" && 'กำลังส่ง'}
                     {data.status === "success" && 'ส่งแล้ว'}
                     {data.status === "failed" && 'รับของแล้ว'}

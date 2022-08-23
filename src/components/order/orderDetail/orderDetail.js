@@ -325,11 +325,12 @@ export default function OrderDetail() {
                                             <div className="relative z-10">
                                                 <Listbox.Button className={`bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-1 px-4 text-gray-700 leading-tight 
                                                  ${selectStatusOrder.status === 'pending' && 'bg-yellow-500'}
+                                                 ${selectStatusOrder.status === 'shipping' && 'bg-orange-500'}
                                                  ${selectStatusOrder.status === 'success' && 'bg-green-500/50'}
                                                  ${selectStatusOrder.status === 'failed' && 'bg-red-500 text-rose-100'}
                                                 `}>
                                                     <span className="block truncate text-left text-white ">
-                                                        {selectStatusOrder.status === "pending" && 'กำลังเตรียมสินค้า'}
+                                                        {selectStatusOrder.status === "pending" && 'กำลังดำเนินการ'}
                                                         {selectStatusOrder.status === "shipping" && 'กำลังส่ง'}
                                                         {selectStatusOrder.status === "success" && 'ส่งแล้ว'}
                                                         {selectStatusOrder.status === "failed" && 'ผิดลาด'}
@@ -361,7 +362,7 @@ export default function OrderDetail() {
                                                                                 }`}
                                                                             onClick={() => handleChangeOrderStatus(data.status)}
                                                                         >
-                                                                            {data.status === "pending" && 'กำลังเตรียมสินค้า'}
+                                                                            {data.status === "pending" && 'กำลังดำเนินการ'}
                                                                             {data.status === "shipping" && 'กำลังส่ง'}
                                                                             {data.status === "success" && 'ส่งแล้ว'}
                                                                             {data.status === "failed" && 'ผิดพลาด'}

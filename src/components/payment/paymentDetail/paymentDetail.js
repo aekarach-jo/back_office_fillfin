@@ -101,22 +101,22 @@ export default function PaymentDetail() {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="py-3 px-6">
-                                username
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                package
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                Gender
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                createdAt
+                                ชื่อผู้ใช้
                             </th>
                             <th scope="col" className="py-3 px-6 text-center">
-                                status
+                                แพ็คเก็จ
                             </th>
                             <th scope="col" className="py-3 px-6 text-center">
-                                option
+                                เพศ
+                            </th>
+                            <th scope="col" className="py-3 px-6 text-center">
+                                วันที่สมัคร
+                            </th>
+                            <th scope="col" className="py-3 px-6 text-center">
+                                สถานะ
+                            </th>
+                            <th scope="col" className="py-3 px-6 text-center">
+                                เพิ่มเติม
                             </th>
                         </tr>
                     </thead>

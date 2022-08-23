@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Editor from './editor';
 import Swal from 'sweetalert2';
-import st from '../../../styles/content/contentDetail.module.scss'
+import st from '../../../../styles/content/contentDetail.module.scss'
 
 const Toast = Swal.mixin({
     toast: true,
@@ -30,7 +30,6 @@ export default function ContentDetail() {
     const [imageLink, setImageLink] = useState('')
 
     const [editorLoaded, setEditorLoaded] = useState(false);
-    const [data, setData] = useState("");
 
     useEffect(() => {
         setEditorLoaded(true);

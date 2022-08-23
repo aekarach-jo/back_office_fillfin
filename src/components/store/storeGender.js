@@ -67,7 +67,7 @@ export default function StoreGender({ gender }) {
         }
     }
     return (
-        <div className="h-screen flex-1 p-4   max-h-screen overflow-auto  animate-[fade_.3s_ease-in-out]">
+        <div className="h-screen flex-1 px-4   max-h-screen overflow-auto  animate-[fade_.3s_ease-in-out]">
             <div className='flex p-6  mx-auto animate-[slide_.3s_ease-in-out]'>
                 <div className='mx-auto flex gap-5 flex-wrap justify-start '>
                     {storeList?.map((data, index) => (

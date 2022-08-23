@@ -15,7 +15,6 @@ const Toast = Swal.mixin({
 export default function Review() {
     const apiUrl = useSelector((state) => (state.app.apiPath))
     const access_token = useSelector((state) => (state.app.access_token))
-
     const [reviewList, setReviewList] = useState()
 
     useEffect(() => {
@@ -113,19 +112,19 @@ export default function Review() {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="py-3 px-6">
-                                No.
+                                ลำดับ
                             </th>
                             <th scope="col" className="py-3 px-6">
-                                message
+                                ข้อความ
                             </th>
                             <th scope="col" className="py-3 px-6">
-                                Date
+                                วันที่
                             </th>
                             <th scope="col" className="py-3 px-6">
-                                status
+                                สถานะ
                             </th>
                             <th scope="col" className="py-3 px-6 text-center">
-                                option
+                                เพิ่มเติม
                             </th>
                         </tr>
                     </thead>

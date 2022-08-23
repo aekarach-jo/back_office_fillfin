@@ -91,34 +91,28 @@ export default function Bank() {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="py-3 px-6">
-                                ID
+                                ชื่อบัญชี
                             </th>
                             <th scope="col" className="py-3 px-6">
-                                name
+                                ธนาคาร
                             </th>
                             <th scope="col" className="py-3 px-6">
-                                Bank
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                Bank number
+                                เลขที่บัญชี
                             </th>
                             <th scope="col" className="py-3 px-6 text-center">
-                                shortname
+                                อักษรย่อ
                             </th>
                             <th scope="col" className="py-3 px-6">
-                                status
+                                สถานะ
                             </th>
                             <th scope="col" className="py-3 px-6 text-center">
-                                option
+                                เพิ่มเติม
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         {bankList?.map((data, index) => (
                             <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {data.id}
-                                </th>
                                 <td className="py-2 px-6">
                                     {data.name}
                                 </td>

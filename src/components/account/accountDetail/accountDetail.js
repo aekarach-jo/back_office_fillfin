@@ -259,17 +259,17 @@ export default function AccountDetail() {
                         </Listbox>
                     </div>
                     <div className={st.contentChangePass}>
-                        <form className="">
+                        <form>
                             <p>Password</p>
                             <input
-                                type="text"
+                                type="password"
                                 defaultValue={password}
                                 maxLength={15}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <p>Confirm Password</p>
                             <input
-                                type="text"
+                                type="password"
                                 defaultValue={confirmPassword}
                                 maxLength={15}
                                 onChange={(e) => setConfirmPassword(e.target.value)

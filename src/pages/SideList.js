@@ -6,7 +6,6 @@ import { appAction } from '../store/app-slice';
 
 const Menus = [
     { title: "Dashboard", route: '/', fa: "fa-solid fa-house-chimney" },
-    { title: "Content", route: '/content', fa: "fa-solid fa-book" },
     { title: "Admin", route: '/admin', fa: "fa-solid fa-user" },
     { title: "Manage Account", gap: true, route: '/account', fa: "fa-solid fa-address-card" },
     { title: "Manage order", route: '/order', fa: "fa-solid fa-border-all" },
@@ -15,6 +14,7 @@ const Menus = [
     { title: "Manage Bank", route: '/bank', fa: "fa-solid fa-money-check-dollar" },
     { title: "Manage Package", route: '/package', fa: "fa-solid fa-box-open" },
     { title: "Manage Payment", route: '/payment', fa: "fa-solid fa-dollar" },
+    { title: "Manage Content", route: '/content', fa: "fa-solid fa-book" },
     { title: "Live Chat", route: '/livechat', fa: "fa-solid fa-chart-bar" },
     { title: "Report", route: '/report', fa: "fa-solid fa-square-poll-vertical" },
     { title: "Setting", route: '/setting', fa: "fa-solid fa-screwdriver-wrench", gap: true },

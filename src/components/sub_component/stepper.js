@@ -157,7 +157,7 @@ ColorlibStepIcon.propTypes = {
 };
 
 const steps = [
-  { id: 'pending', statusProduct: 'กำลังเตรียมสินค้า' },
+  { id: 'pending', statusProduct: 'กำลังดำเนินการ' },
   { id: 'shipping', statusProduct: 'กำลังส่ง' },
   { id: 'success', statusProduct: 'ส่งแล้ว' },
   { id: 'accepted', statusProduct: 'รับของแล้ว' }

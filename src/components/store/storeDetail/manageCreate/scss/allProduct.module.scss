@@ -107,8 +107,12 @@ $desktop: "only screen and (min-width : 1025px)";
       }
 
       .product_name {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        margin: 0.5rem;
         text-align: left;
-        font-weight: 700;
+        font-weight: 500;
       }
       .detail_text {
         display: flex;

@@ -27,7 +27,7 @@ const Table = ({ data, rowsPerPage, searchText, apiGetPackage }) => {
   const [imageObj, setImageobj] = useState();
   const inputProfileImage = useRef([]);
 
-  useEffect(() => {}, [select]);
+  useEffect(() => { }, [select]);
 
   function handleSelect(data) {
     setSelect(data);
@@ -149,7 +149,7 @@ const Table = ({ data, rowsPerPage, searchText, apiGetPackage }) => {
                   <div className="w-3/5">
                     <input
                       className="bg-gray-300  border-2 border-gray-200 
-                                                        rounded w-[80%] py-2 px-4 text-gray-700 leading-tight "
+                      rounded w-[80%] py-2 px-4 text-gray-700 leading-tight "
                       type="text"
                       readOnly
                       defaultValue={packageEdit.name}
@@ -205,16 +205,17 @@ const Table = ({ data, rowsPerPage, searchText, apiGetPackage }) => {
                     <i className="absolute right-9 top-3 text-gray-500 fa-solid fa-percent"></i>
                   </div>
                 </div>
-                <div className="flex mb-2 ">
-                  <div className="w-2/5">
-                    <label className="block text-left  text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
+              </div>
+            </div>
+            <div className="flex w-1/3 sm:w-full sm:mx-5">
+              <div className="w-full my-auto">
+                <div className="flex flex-col gap-2 mb-2 ">
+                    <label className="block text-left  text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">
                       บทความ
                     </label>
-                  </div>
-                  <div className="w-3/5">
                     <textarea
                       className="bg-white appearance-none border-2 border-gray-200 
-                      rounded p-2 w-[80%] h-24 text-gray-700 leading-tight focus:outline-none 
+                      rounded p-2 w-full h-36 text-gray-700 leading-tight focus:outline-none 
                      focus:bg-white focus:border-pink-500"
                       type="text"
                       defaultValue={packageEdit.content}
@@ -225,23 +226,19 @@ const Table = ({ data, rowsPerPage, searchText, apiGetPackage }) => {
                         })
                       }
                     />
-            <button
-              type="button"
-              className="m-auto gap-2 flex text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-4 focus:ring-pink-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-pink-900"
-              onClick={() => (handleEdit(), setOpen(!open))}
-            >
-              <i className="my-auto fa-solid fa-pen-to-square"></i>
-              แก้ไข
-            </button>
+                    <button
+                      type="button"
+                      className="w-28 ml-auto gap-2 flex text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-4 focus:ring-pink-300 font-medium rounded-xl text-sm px-5 py-1.5 text-center dark:focus:ring-pink-900"
+                      onClick={() => (handleEdit(), setOpen(!open))}
+                    >
+                      <i className="my-auo fa-solid fa-pen-to-square"></i>
+                      <p> แก้ไข</p>
+
+                    </button>
                   </div>
-                </div>
 
               </div>
             </div>
-            {/* <ListItem button>
-            <ListItemIcon>1</ListItemIcon>
-            <ListItemText primary="Whatever" />
-          </ListItem> */}
           </List>
         </Collapse>
       )}

@@ -5,8 +5,6 @@ import Account from './components/account/Account';
 import AccountDetail from './components/account/accountDetail/accountDetail';
 import LiveChat from './components/livechat/liveChat';
 import Bank from './components/bank/Bank';
-import Content from './components/content/Content';
-import ContentDetail from './components/content/contentDetail/contentDetail';
 import Order from './components/order/order';
 import OrderDetail from './components/order/orderDetail/orderDetail';
 import Package from './components/package/Package';
@@ -23,6 +21,8 @@ import Dashboard from './components/dashboard/dashboard';
 import Admin from './components/admin/admin';
 import AdminDetail from './components/admin/adminDetail/adminDetail';
 import Report from './components/report/report';
+import Content from './components/content/Content';
+import ContentDetail from './components/content/contents/contentDetail/contentDetail';
 
 function App() {
   return (

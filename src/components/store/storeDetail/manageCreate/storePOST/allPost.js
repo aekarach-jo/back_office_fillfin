@@ -79,6 +79,7 @@ export default function AllPost({ postList, apiGetStore }) {
                                     <FormetDate dateTime={data.createdAt} />
                                 </div>
                                 <div className={st.detail_text}>
+                                    <p>รายละเอียด :</p>
                                     <p>{data.caption}</p>
                                 </div>
                                 <div className={st.column_img}>

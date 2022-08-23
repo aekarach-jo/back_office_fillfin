@@ -21,7 +21,6 @@ export default function AllProduct({ productList, apiGetStore }) {
     const [isDelete, setIsDelete] = useState(false)
     const [select, setSelect] = useState()
     const [priorityNumber, setPriorityNumber] = useState([])
-    // const [onChoose, setOnChoose] = useState()
     console.log(priorityNumber)
     useEffect(() => {
         setPriorityNumber([])
@@ -150,6 +149,7 @@ export default function AllProduct({ productList, apiGetStore }) {
                                     </div>
                                 }
                                 <div className={st.product_name}>
+                                    <p>ชื่อสินค้า : </p>
                                     <p>{data.name}</p>
                                 </div>
                                 <div className={st.detail_text}>
@@ -169,13 +169,13 @@ export default function AllProduct({ productList, apiGetStore }) {
                                         <input
                                             className='w-10 p-1 bg-gray-300/50 text-center rounded'
                                             type="text"
-                                            value={priorityNumber[index] || 0}
+                                            value={priorityNumber[index] || ''}
                                             onChange={(e) => setPriorityNumber(prev => prev.map((data, ii) => {
-                                                if(ii === index){
+                                                if (ii === index) {
                                                     return e.target.value
                                                 } else {
                                                     return data
-                                                }  
+                                                }
                                             }))}
                                         />
                                         <i onClick={() => setPriority(data.product_code)} className="text-xl fa-solid fa-repeat hover:scale-125 duration-200 cursor-pointer"></i>

@@ -70,9 +70,10 @@ export default function Login() {
           src="./assets/background/art2.jpg"
           alt="login-bg"
         />
-      <div className=" lg:mx-auto lg:w-[40%] sm:rounded-lg sm:h-screen md:rounded-sm lg:rounded-lg lg:my-auto bg-gray-800 flex flex-col justify-center ">
-        {/* <div className="4xl:rounded-l-full lg:rounded-full mx-20 bg-gray-800  "> */}
+      <div className=" lg:mx-auto lg:w-[40%] sm:rounded-lg sm:h-screen md:rounded-sm lg:rounded-lg lg:my-auto bg-gray-800 flex flex-col justify-center duration-200">
+        <div className="sm:rounded-lg md:rounded-lg sm:mx-2 md:mx-[10%] sm:bg-gray-700 duration-200 ">
         <form className="relative max-w-[380px] w-full mx-auto p-8 px-8 rounded-lg  contrast-200">
+          {/* <img width={200} height={80} className="mb-5 mx-auto" src="/assets/logo-fillfin.png"/> */}
           <h2 className="text-4xl text-white font-bold text-center">
             เข้าสู่ระบบ
           </h2>
@@ -110,7 +111,7 @@ export default function Login() {
           </a>
         </form>
       </div>
-      {/* </div> */}
+      </div>
     </div>
   );
 }

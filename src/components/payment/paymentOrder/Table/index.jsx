@@ -20,22 +20,22 @@ const Table = ({ data, rowsPerPage, searchText }) => {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="py-3 px-6">
-              username
+              ชื่อผู้ใช้
             </th>
             <th scope="col" className="py-3 px-6 text-center">
-              package
+              แพ็คเก็จ
             </th>
             <th scope="col" className="py-3 px-6 text-center">
-              Gender
+              เพศ
             </th>
             <th scope="col" className="py-3 px-6 text-center">
-              createdAt
+              วันที่สมัคร
             </th>
             <th scope="col" className="py-3 px-6 text-center">
-              status
+              สถานะ
             </th>
             <th scope="col" className="py-3 px-6 text-center">
-              option
+              เพิ่มเติม
             </th>
           </tr>
         </thead>
